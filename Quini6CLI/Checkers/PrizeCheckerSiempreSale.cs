@@ -67,12 +67,15 @@ namespace Quini6CLI.Checkers
                 }
             }
 
+            int NumberOfMatchesWinners = 0;
+
             if (SiempreSalePotentialWinnersSixMatches.Any())
             {
                 foreach (Player SSPlayer in SiempreSalePotentialWinnersSixMatches)
                 {
                     SiempreSalePrizeWinners.Add(SSPlayer);
                 }
+                NumberOfMatchesWinners = 6;
             }
             else if (SiempreSalePotentialWinnersFiveMatches.Any())
             {
@@ -80,6 +83,7 @@ namespace Quini6CLI.Checkers
                 {
                     SiempreSalePrizeWinners.Add(SSPlayer);
                 }
+                NumberOfMatchesWinners = 5;
             }
             else if (SiempreSalePotentialWinnersFourMatches.Any())
             {
@@ -87,6 +91,7 @@ namespace Quini6CLI.Checkers
                 {
                     SiempreSalePrizeWinners.Add(SSPlayer);
                 }
+                NumberOfMatchesWinners = 4;
             }
             else if (SiempreSalePotentialWinnersThreeMatches.Any())
             {
@@ -94,6 +99,7 @@ namespace Quini6CLI.Checkers
                 {
                     SiempreSalePrizeWinners.Add(SSPlayer);
                 }
+                NumberOfMatchesWinners = 3;
             }
             else if (SiempreSalePotentialWinnersTwoMatches.Any())
             {
@@ -101,6 +107,7 @@ namespace Quini6CLI.Checkers
                 {
                     SiempreSalePrizeWinners.Add(SSPlayer);
                 }
+                NumberOfMatchesWinners = 2;
             }
             else if (SiempreSalePotentialWinnersOneMatch.Any())
             {
@@ -108,6 +115,7 @@ namespace Quini6CLI.Checkers
                 {
                     SiempreSalePrizeWinners.Add(SSPlayer);
                 }
+                NumberOfMatchesWinners = 1;
             }
 
             foreach (Player SSPlayer in Results.Players)
@@ -120,7 +128,8 @@ namespace Quini6CLI.Checkers
 
             SiempreSaleWinners SSW = new SiempreSaleWinners(
                 SiempreSalePrize,
-                SiempreSalePrizeWinners
+                SiempreSalePrizeWinners,
+                NumberOfMatchesWinners
                 );
 
             return SSW;

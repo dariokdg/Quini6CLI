@@ -232,139 +232,81 @@ namespace Quini6CLI.Core
             SiempreSaleWinners SSW = Q6W.SSW;
             PozoExtraWinners PEW = Q6W.PEW;
 
+
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("");
             Console.WriteLine("----------------------");
+            Console.WriteLine($"QUINI 6 DRAWING WINNERS:");
+            Console.WriteLine("----------------------");
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("");
             Console.WriteLine($"Tradicional Primera:");
             Console.WriteLine("----------------------");
-            Console.WriteLine($"First prize: {TradicionalPrimeraFirstPrize:C}");
-            if (TPW.TradicionalPrimeraFirstPrizeWinners.Count <= 0)
-            {
-                Console.WriteLine($"There were no winners!");
-            }
-            else
-            {
-                Console.WriteLine($"There were {TPW.TradicionalPrimeraFirstPrizeWinners.Count} winners!");
-                Console.WriteLine($"Each one of them gets {TPW.TradicionalPrimeraFirstPrizeAmountPerWinner:C}!");
-            }
-
-            Console.WriteLine("----------------------");
-            Console.WriteLine($"Second prize: {TradicionalPrimeraSecondPrize:C}");
-            if (TPW.TradicionalPrimeraSecondPrizeWinners.Count <= 0)
-            {
-                Console.WriteLine($"There were no winners!");
-            }
-            else
-            {
-                Console.WriteLine($"There were {TPW.TradicionalPrimeraSecondPrizeWinners.Count} winners!");
-                Console.WriteLine($"Each one of them gets {TPW.TradicionalPrimeraSecondPrizeAmountPerWinner:C}!");
-            }
-
-            Console.WriteLine("----------------------");
-            Console.WriteLine($"Third prize: {TradicionalPrimeraThirdPrize:C}");
-            if (TPW.TradicionalPrimeraThirdPrizeWinners.Count <= 0)
-            {
-                Console.WriteLine($"There were no winners!");
-            }
-            else
-            {
-                Console.WriteLine($"There were {TPW.TradicionalPrimeraThirdPrizeWinners.Count} winners!");
-                Console.WriteLine($"Each one of them gets {TPW.TradicionalPrimeraThirdPrizeAmountPerWinner:C}!");
-            }
+            ConsoleTable TPFP = new ConsoleTable("FIRST PRIZE (6 matches)", "NUMBER OF WINNERS", "EACH ONE GETS");
+            TPFP.AddRow(TradicionalPrimeraFirstPrize.ToString("c2"), TPW.TradicionalPrimeraFirstPrizeWinners.Count, TPW.TradicionalPrimeraFirstPrizeAmountPerWinner.ToString("c2"));
+            TPFP.Write(Format.Alternative);
+            Console.WriteLine("");
+            ConsoleTable TPSP = new ConsoleTable("SECOND PRIZE (5 matches)", "NUMBER OF WINNERS", "EACH ONE GETS");
+            TPSP.AddRow(TradicionalPrimeraSecondPrize.ToString("c2"), TPW.TradicionalPrimeraSecondPrizeWinners.Count, TPW.TradicionalPrimeraSecondPrizeAmountPerWinner.ToString("c2"));
+            TPSP.Write(Format.Alternative);
+            Console.WriteLine("");
+            ConsoleTable TPTP = new ConsoleTable("THIRD PRIZE (5 matches)", "NUMBER OF WINNERS", "EACH ONE GETS");
+            TPTP.AddRow(TradicionalPrimeraThirdPrize.ToString("c2"), TPW.TradicionalPrimeraThirdPrizeWinners.Count, TPW.TradicionalPrimeraThirdPrizeAmountPerWinner.ToString("c2"));
+            TPTP.Write(Format.Alternative);
 
 
-            Console.WriteLine("----------------------");
-            Console.WriteLine("----------------------");
 
-            Console.WriteLine("----------------------");
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("");
             Console.WriteLine($"Tradicional Segunda:");
             Console.WriteLine("----------------------");
-            Console.WriteLine($"First prize: {TradicionalSegundaFirstPrize:C}");
-            if (TSW.TradicionalSegundaFirstPrizeWinners.Count <= 0)
-            {
-                Console.WriteLine($"There were no winners!");
-            }
-            else
-            {
-                Console.WriteLine($"There were {TSW.TradicionalSegundaFirstPrizeWinners.Count} winners!");
-                Console.WriteLine($"Each one of them gets {TSW.TradicionalSegundaFirstPrizeAmountPerWinner:C}!");
-            }
-
-            Console.WriteLine("----------------------");
-            Console.WriteLine($"Second prize: {TradicionalSegundaSecondPrize:C}");
-            if (TSW.TradicionalSegundaSecondPrizeWinners.Count <= 0)
-            {
-                Console.WriteLine($"There were no winners!");
-            }
-            else
-            {
-                Console.WriteLine($"There were {TSW.TradicionalSegundaSecondPrizeWinners.Count} winners!");
-                Console.WriteLine($"Each one of them gets {TSW.TradicionalSegundaSecondPrizeAmountPerWinner:C}!");
-            }
-
-            Console.WriteLine("----------------------");
-            Console.WriteLine($"Third prize: {TradicionalSegundaThirdPrize:C}");
-            if (TSW.TradicionalSegundaThirdPrizeWinners.Count <= 0)
-            {
-                Console.WriteLine($"There were no winners!");
-            }
-            else
-            {
-                Console.WriteLine($"There were {TSW.TradicionalSegundaThirdPrizeWinners.Count} winners!");
-                Console.WriteLine($"Each one of them gets {TSW.TradicionalSegundaThirdPrizeAmountPerWinner:C}!");
-            }
+            ConsoleTable TSFP = new ConsoleTable("FIRST PRIZE (6 matches)", "NUMBER OF WINNERS", "EACH ONE GETS");
+            TSFP.AddRow(TradicionalSegundaFirstPrize.ToString("c2"), TSW.TradicionalSegundaFirstPrizeWinners.Count, TSW.TradicionalSegundaFirstPrizeAmountPerWinner.ToString("c2"));
+            TSFP.Write(Format.Alternative);
+            Console.WriteLine("");
+            ConsoleTable TSSP = new ConsoleTable("SECOND PRIZE (5 matches)", "NUMBER OF WINNERS", "EACH ONE GETS");
+            TSSP.AddRow(TradicionalSegundaSecondPrize.ToString("c2"), TSW.TradicionalSegundaSecondPrizeWinners.Count, TSW.TradicionalSegundaSecondPrizeAmountPerWinner.ToString("c2"));
+            TSSP.Write(Format.Alternative);
+            Console.WriteLine("");
+            ConsoleTable TSTP = new ConsoleTable("THIRD PRIZE (5 matches)", "NUMBER OF WINNERS", "EACH ONE GETS");
+            TSTP.AddRow(TradicionalSegundaThirdPrize.ToString("c2"), TSW.TradicionalSegundaThirdPrizeWinners.Count, TSW.TradicionalSegundaThirdPrizeAmountPerWinner.ToString("c2"));
+            TSTP.Write(Format.Alternative);
 
 
-            Console.WriteLine("----------------------");
-            Console.WriteLine("----------------------");
 
-            Console.WriteLine("----------------------");
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("");
             Console.WriteLine($"Revancha:");
             Console.WriteLine("----------------------");
-            Console.WriteLine($"Main prize: {RevanchaPrize:C}");
-            if (RW.RevanchaPrizeWinners.Count <= 0)
-            {
-                Console.WriteLine($"There were no winners!");
-            }
-            else
-            {
-                Console.WriteLine($"There were {RW.RevanchaPrizeWinners.Count} winners!");
-                Console.WriteLine($"Each one of them gets {RW.RevanchaPrizeAmountPerWinner:C}!");
-            }
+            ConsoleTable RP = new ConsoleTable("MAIN PRIZE (6 matches)", "NUMBER OF WINNERS", "EACH ONE GETS");
+            RP.AddRow(RevanchaPrize.ToString("c2"), RW.RevanchaPrizeWinners.Count, RW.RevanchaPrizeAmountPerWinner.ToString("c2"));
+            RP.Write(Format.Alternative);
 
 
-            Console.WriteLine("----------------------");
-            Console.WriteLine("----------------------");
 
-            Console.WriteLine("----------------------");
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("");
             Console.WriteLine($"Siempre Sale:");
             Console.WriteLine("----------------------");
-            Console.WriteLine($"Main prize: {SiempreSalePrize:C}");
-            if (SSW.SiempreSalePrizeWinners.Count <= 0)
-            {
-                Console.WriteLine($"There were no winners!");
-            }
-            else
-            {
-                Console.WriteLine($"There were {SSW.SiempreSalePrizeWinners.Count} winners!");
-                Console.WriteLine($"Each one of them gets {SSW.SiempreSalePrizeAmountPerWinner:C}!");
-            }
+            ConsoleTable SSP = new ConsoleTable("MAIN PRIZE", "NUMBER OF WINNERS", "MATCHING NUMBERS", "EACH ONE GETS");
+            SSP.AddRow(SiempreSalePrize.ToString("c2"), SSW.SiempreSalePrizeWinners.Count, SSW.SiempreSaleWinnersNumberofMatches, SSW.SiempreSalePrizeAmountPerWinner.ToString("c2"));
+            SSP.Write(Format.Alternative);
 
 
-            Console.WriteLine("----------------------");
-            Console.WriteLine("----------------------");
 
-            Console.WriteLine("----------------------");
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("");
             Console.WriteLine($"Pozo Extra:");
             Console.WriteLine("----------------------");
-            Console.WriteLine($"Main prize: {PozoExtraPrize:C}");
-            if (PEW.PozoExtraPrizeWinners.Count <= 0)
-            {
-                Console.WriteLine($"There were no winners!");
-            }
-            else
-            {
-                Console.WriteLine($"There were {PEW.PozoExtraPrizeWinners.Count} winners!");
-                Console.WriteLine($"Each one of them gets {PEW.PozoExtraPrizeAmountPerWinner:C}!");
-            }
+            ConsoleTable PEP = new ConsoleTable("MAIN PRIZE (6 matches)", "NUMBER OF WINNERS", "EACH ONE GETS");
+            PEP.AddRow(PozoExtraPrize.ToString("c2"), PEW.PozoExtraPrizeWinners.Count, PEW.PozoExtraPrizeAmountPerWinner.ToString("c2"));
+            PEP.Write(Format.Alternative);
         }
     }
 }
