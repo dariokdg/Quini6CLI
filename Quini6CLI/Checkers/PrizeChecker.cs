@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Quini6CLI
+namespace Quini6CLI.Checkers
 {
     class PrizeChecker : IPrizeChecker
     {

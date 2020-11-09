@@ -2,7 +2,7 @@
 using System;
 using System.Security.Cryptography;
 
-namespace Quini6CLI
+namespace Quini6CLI.Providers
 {
     class RandomNumberProvider : IRandomNumber
     {
