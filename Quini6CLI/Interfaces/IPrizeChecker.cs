@@ -6,6 +6,9 @@ namespace Quini6CLI.Interfaces
 {
     interface IPrizeChecker
     {
+        public void CheckPrizes()
+        {
 
+        }
     }
 }

@@ -6,6 +6,6 @@ namespace Quini6CLI.Interfaces
 {
     interface IResultGenerator
     {
-        public List<int> GetQuini6Results();
+        public List<int> GenerateDrawingResults();
     }
 }

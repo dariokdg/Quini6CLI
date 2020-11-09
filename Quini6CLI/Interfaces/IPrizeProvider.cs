@@ -16,14 +16,6 @@ namespace Quini6CLI.Interfaces
             FiveMatches,
             SixMatches
         }
-        public enum GameType
-        {
-            TradicionalPrimera,
-            TradicionalSegunda,
-            Revancha,
-            SiempreSale,
-            PozoExtra
-        }
 
         public enum PrizeTypeTradicionalPrimera
         {

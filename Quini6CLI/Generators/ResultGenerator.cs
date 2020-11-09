@@ -17,6 +17,11 @@ namespace Quini6CLI.Generators
 
         public ResultGenerator()
         {
+
+        }
+
+        public List<int> GenerateDrawingResults()
+        {
             RandomNumberProvider RNP = new RandomNumberProvider();
             FirstNumber = GetFirstNumber(RNP);
             SecondNumber = GetSecondNumber(RNP);
@@ -24,10 +29,6 @@ namespace Quini6CLI.Generators
             FourthNumber = GetFourthNumber(RNP);
             FifthNumber = GetFifthNumber(RNP);
             SixthNumber = GetSixthNumber(RNP);
-        }
-
-        public List<int> GetQuini6Results()
-        {
             return new List<int> { FirstNumber, SecondNumber, ThirdNumber, FourthNumber, FifthNumber, SixthNumber };
         }
 
