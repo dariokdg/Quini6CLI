@@ -20,7 +20,7 @@ namespace Quini6CLI.Core
         private string City { get; set; }
         private string Address { get; set; }
         private string PhoneNumber { get; set; }
-        private List<int> SelectedNumbers { get; set; }
+        public List<int> SelectedNumbers { get; set; }
         private decimal PrizeMoney { get; set; }
         public GameParticipation Games { get; set; }
 

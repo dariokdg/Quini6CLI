@@ -1,4 +1,5 @@
 ﻿using Quini6CLI.Interfaces;
+using static Quini6CLI.Enumerators.Enumerators;
 
 namespace Quini6CLI.Providers
 {
@@ -10,125 +11,130 @@ namespace Quini6CLI.Providers
 
         }
 
-        public IPrizeProvider.Matches CheckMatches(int MatchingNumbers)
+        public Matches CheckMatches(int NumberOfMatches)
         {
-            switch (MatchingNumbers)
+            switch (NumberOfMatches)
             {
                 case 6:
-                    return IPrizeProvider.Matches.SixMatches;
+                    return Matches.SixMatches;
                 case 5:
-                    return IPrizeProvider.Matches.FiveMatches;
+                    return Matches.FiveMatches;
                 case 4:
-                    return IPrizeProvider.Matches.FourMatches;
+                    return Matches.FourMatches;
                 case 3:
-                    return IPrizeProvider.Matches.ThreeMatches;
+                    return Matches.ThreeMatches;
                 case 2:
-                    return IPrizeProvider.Matches.TwoMatches;
+                    return Matches.TwoMatches;
                 case 1:
-                    return IPrizeProvider.Matches.OneMatch;
+                    return Matches.OneMatch;
                 case 0:
-                    return IPrizeProvider.Matches.NoMatches;
+                    return Matches.NoMatches;
                 default:
-                    return IPrizeProvider.Matches.NoMatches;
+                    return Matches.NoMatches;
             }
         }
 
-        public IPrizeProvider.PrizeTypeTradicionalPrimera CheckMatchesTradicionalPrimera(IPrizeProvider.Matches TradicionalPrimeraMatches)
+        public PrizeTypeTradicionalPrimera CheckMatchesTradicionalPrimera(int NumberOfMatches)
         {
+            Matches TradicionalPrimeraMatches = CheckMatches(NumberOfMatches);
             switch (TradicionalPrimeraMatches)
             {
-                case IPrizeProvider.Matches.SixMatches:
-                    return IPrizeProvider.PrizeTypeTradicionalPrimera.FirstPrize;
-                case IPrizeProvider.Matches.FiveMatches:
-                    return IPrizeProvider.PrizeTypeTradicionalPrimera.SecondPrize;
-                case IPrizeProvider.Matches.FourMatches:
-                    return IPrizeProvider.PrizeTypeTradicionalPrimera.ThirdPrize;
-                case IPrizeProvider.Matches.ThreeMatches:
-                case IPrizeProvider.Matches.TwoMatches:
-                case IPrizeProvider.Matches.OneMatch:
-                case IPrizeProvider.Matches.NoMatches:
-                    return IPrizeProvider.PrizeTypeTradicionalPrimera.NoPrize;
+                case Matches.SixMatches:
+                    return PrizeTypeTradicionalPrimera.FirstPrize;
+                case Matches.FiveMatches:
+                    return PrizeTypeTradicionalPrimera.SecondPrize;
+                case Matches.FourMatches:
+                    return PrizeTypeTradicionalPrimera.ThirdPrize;
+                case Matches.ThreeMatches:
+                case Matches.TwoMatches:
+                case Matches.OneMatch:
+                case Matches.NoMatches:
+                    return PrizeTypeTradicionalPrimera.NoPrize;
                 default:
-                    return IPrizeProvider.PrizeTypeTradicionalPrimera.NoPrize;
+                    return PrizeTypeTradicionalPrimera.NoPrize;
             }
         }
 
-        public IPrizeProvider.PrizeTypeTradicionalSegunda CheckMatchesTradicionalSegunda(IPrizeProvider.Matches TradicionalSegundaMatches)
+        public PrizeTypeTradicionalSegunda CheckMatchesTradicionalSegunda(int NumberOfMatches)
         {
+            Matches TradicionalSegundaMatches = CheckMatches(NumberOfMatches);
             switch (TradicionalSegundaMatches)
             {
-                case IPrizeProvider.Matches.SixMatches:
-                    return IPrizeProvider.PrizeTypeTradicionalSegunda.FirstPrize;
-                case IPrizeProvider.Matches.FiveMatches:
-                    return IPrizeProvider.PrizeTypeTradicionalSegunda.SecondPrize;
-                case IPrizeProvider.Matches.FourMatches:
-                    return IPrizeProvider.PrizeTypeTradicionalSegunda.ThirdPrize;
-                case IPrizeProvider.Matches.ThreeMatches:
-                case IPrizeProvider.Matches.TwoMatches:
-                case IPrizeProvider.Matches.OneMatch:
-                case IPrizeProvider.Matches.NoMatches:
-                    return IPrizeProvider.PrizeTypeTradicionalSegunda.NoPrize;
+                case Matches.SixMatches:
+                    return PrizeTypeTradicionalSegunda.FirstPrize;
+                case Matches.FiveMatches:
+                    return PrizeTypeTradicionalSegunda.SecondPrize;
+                case Matches.FourMatches:
+                    return PrizeTypeTradicionalSegunda.ThirdPrize;
+                case Matches.ThreeMatches:
+                case Matches.TwoMatches:
+                case Matches.OneMatch:
+                case Matches.NoMatches:
+                    return PrizeTypeTradicionalSegunda.NoPrize;
                 default:
-                    return IPrizeProvider.PrizeTypeTradicionalSegunda.NoPrize;
+                    return PrizeTypeTradicionalSegunda.NoPrize;
             }
         }
 
-        public IPrizeProvider.PrizeTypeRevancha CheckMatchesRevancha(IPrizeProvider.Matches RevanchaMatches)
+        public PrizeTypeRevancha CheckMatchesRevancha(int NumberOfMatches)
         {
+            Matches RevanchaMatches = CheckMatches(NumberOfMatches);
             switch (RevanchaMatches)
             {
-                case IPrizeProvider.Matches.SixMatches:
-                    return IPrizeProvider.PrizeTypeRevancha.FirstPrize;
-                case IPrizeProvider.Matches.FiveMatches:
-                case IPrizeProvider.Matches.FourMatches:
-                case IPrizeProvider.Matches.ThreeMatches:
-                case IPrizeProvider.Matches.TwoMatches:
-                case IPrizeProvider.Matches.OneMatch:
-                case IPrizeProvider.Matches.NoMatches:
-                    return IPrizeProvider.PrizeTypeRevancha.NoPrize;
+                case Matches.SixMatches:
+                    return PrizeTypeRevancha.FirstPrize;
+                case Matches.FiveMatches:
+                case Matches.FourMatches:
+                case Matches.ThreeMatches:
+                case Matches.TwoMatches:
+                case Matches.OneMatch:
+                case Matches.NoMatches:
+                    return PrizeTypeRevancha.NoPrize;
                 default:
-                    return IPrizeProvider.PrizeTypeRevancha.NoPrize;
+                    return PrizeTypeRevancha.NoPrize;
             }
         }
 
-        public IPrizeProvider.PrizeTypeSiempreSale CheckMatchesSiempreSale(IPrizeProvider.Matches SiempreSaleMatches)
+        public PrizeTypeSiempreSale CheckMatchesSiempreSale(int NumberOfMatches)
         {
+            Matches SiempreSaleMatches = CheckMatches(NumberOfMatches);
             switch (SiempreSaleMatches)
             {
-                case IPrizeProvider.Matches.SixMatches:
-                    return IPrizeProvider.PrizeTypeSiempreSale.PotentialWinnerSixMatches;
-                case IPrizeProvider.Matches.FiveMatches:
-                    return IPrizeProvider.PrizeTypeSiempreSale.PotentialWinnerFiveMatches;
-                case IPrizeProvider.Matches.FourMatches:
-                    return IPrizeProvider.PrizeTypeSiempreSale.PotentialWinnerFourMatches;
-                case IPrizeProvider.Matches.ThreeMatches:
-                    return IPrizeProvider.PrizeTypeSiempreSale.PotentialWinnerThreeMatches;
-                case IPrizeProvider.Matches.TwoMatches:
-                    return IPrizeProvider.PrizeTypeSiempreSale.PotentialWinnerTwoMatches;
-                case IPrizeProvider.Matches.OneMatch:
-                    return IPrizeProvider.PrizeTypeSiempreSale.PotentialWinnerOneMatch;
-                case IPrizeProvider.Matches.NoMatches:
-                    return IPrizeProvider.PrizeTypeSiempreSale.NoPrize;
+                case Matches.SixMatches:
+                    return PrizeTypeSiempreSale.PotentialWinnerSixMatches;
+                case Matches.FiveMatches:
+                    return PrizeTypeSiempreSale.PotentialWinnerFiveMatches;
+                case Matches.FourMatches:
+                    return PrizeTypeSiempreSale.PotentialWinnerFourMatches;
+                case Matches.ThreeMatches:
+                    return PrizeTypeSiempreSale.PotentialWinnerThreeMatches;
+                case Matches.TwoMatches:
+                    return PrizeTypeSiempreSale.PotentialWinnerTwoMatches;
+                case Matches.OneMatch:
+                    return PrizeTypeSiempreSale.PotentialWinnerOneMatch;
+                case Matches.NoMatches:
+                    return PrizeTypeSiempreSale.NoPrize;
                 default:
-                    return IPrizeProvider.PrizeTypeSiempreSale.NoPrize;
+                    return PrizeTypeSiempreSale.NoPrize;
             }
         }
 
-        public IPrizeProvider.PrizeTypePozoExtra CheckMatchesPozoExtra(IPrizeProvider.Matches PozoExtraMatches)
+        public PrizeTypePozoExtra CheckMatchesPozoExtra(int NumberOfMatches)
         {
+            Matches PozoExtraMatches = CheckMatches(NumberOfMatches);
             switch (PozoExtraMatches)
             {
-                case IPrizeProvider.Matches.SixMatches:
-                    return IPrizeProvider.PrizeTypePozoExtra.FirstPrize;
-                case IPrizeProvider.Matches.FiveMatches:
-                case IPrizeProvider.Matches.FourMatches:
-                case IPrizeProvider.Matches.ThreeMatches:
-                case IPrizeProvider.Matches.TwoMatches:
-                case IPrizeProvider.Matches.OneMatch:
-                case IPrizeProvider.Matches.NoMatches:
-                    return IPrizeProvider.PrizeTypePozoExtra.NoPrize;
+                case Matches.SixMatches:
+                    return PrizeTypePozoExtra.FirstPrize;
+                case Matches.FiveMatches:
+                case Matches.FourMatches:
+                case Matches.ThreeMatches:
+                case Matches.TwoMatches:
+                case Matches.OneMatch:
+                case Matches.NoMatches:
+                    return PrizeTypePozoExtra.NoPrize;
                 default:
-                    return IPrizeProvider.PrizeTypePozoExtra.NoPrize;
+                    return PrizeTypePozoExtra.NoPrize;
             }
         }
     }

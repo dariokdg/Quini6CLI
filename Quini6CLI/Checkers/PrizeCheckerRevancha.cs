@@ -1,7 +1,8 @@
 ﻿using Quini6CLI.Interfaces;
 using Quini6CLI.Core;
 using System.Collections.Generic;
-using System.Linq;
+using Quini6CLI.Providers;
+using static Quini6CLI.Enumerators.Enumerators;
 
 namespace Quini6CLI.Checkers
 {
@@ -23,11 +24,19 @@ namespace Quini6CLI.Checkers
         {
             List<Player> RevanchaPrizeWinners = new List<Player>();
             List<Player> NoPrize = new List<Player>();
-
-            //Revancha
-            foreach (Player p in Results.Players)
+            foreach (Player RPlayer in Results.Players)
             {
-
+                ResultChecker RC = new ResultChecker();
+                PrizeProvider PP = new PrizeProvider();
+                if (PP.CheckMatchesRevancha(RC.GetMatchingNumbers(RPlayer.SelectedNumbers, Results.DrawingResults)) == PrizeTypeRevancha.FirstPrize)
+                {
+                    //Winner winner chicken dinner
+                    RevanchaPrizeWinners.Add(RPlayer);
+                }
+                else
+                {
+                    NoPrize.Add(RPlayer);
+                }
             }
 
         }

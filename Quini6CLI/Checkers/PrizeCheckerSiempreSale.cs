@@ -1,6 +1,8 @@
 ﻿using Quini6CLI.Interfaces;
 using Quini6CLI.Core;
 using System.Collections.Generic;
+using Quini6CLI.Providers;
+using static Quini6CLI.Enumerators.Enumerators;
 using System.Linq;
 
 namespace Quini6CLI.Checkers
@@ -22,12 +24,97 @@ namespace Quini6CLI.Checkers
         public void CheckPrizes()
         {
             List<Player> SiempreSalePrizeWinners = new List<Player>();
+            List<Player> SiempreSalePotentialWinnersSixMatches = new List<Player>();
+            List<Player> SiempreSalePotentialWinnersFiveMatches = new List<Player>();
+            List<Player> SiempreSalePotentialWinnersFourMatches = new List<Player>();
+            List<Player> SiempreSalePotentialWinnersThreeMatches = new List<Player>();
+            List<Player> SiempreSalePotentialWinnersTwoMatches = new List<Player>();
+            List<Player> SiempreSalePotentialWinnersOneMatch = new List<Player>();
             List<Player> NoPrize = new List<Player>();
-
-            //Siempre Sale
-            foreach (Player p in Results.Players)
+            foreach (Player SSPlayer in Results.Players)
             {
+                ResultChecker RC = new ResultChecker();
+                PrizeProvider PP = new PrizeProvider();
+                PrizeTypeSiempreSale SiempreSalePlayerResults = PP.CheckMatchesSiempreSale(RC.GetMatchingNumbers(SSPlayer.SelectedNumbers, Results.DrawingResults));
+                if (SiempreSalePlayerResults == PrizeTypeSiempreSale.PotentialWinnerSixMatches)
+                {
+                    SiempreSalePotentialWinnersSixMatches.Add(SSPlayer);
+                }
+                else if (SiempreSalePlayerResults == PrizeTypeSiempreSale.PotentialWinnerFiveMatches)
+                {
+                    SiempreSalePotentialWinnersFiveMatches.Add(SSPlayer);
+                }
+                else if (SiempreSalePlayerResults == PrizeTypeSiempreSale.PotentialWinnerFourMatches)
+                {
+                    SiempreSalePotentialWinnersFourMatches.Add(SSPlayer);
+                }
+                else if (SiempreSalePlayerResults == PrizeTypeSiempreSale.PotentialWinnerThreeMatches)
+                {
+                    SiempreSalePotentialWinnersThreeMatches.Add(SSPlayer);
+                }
+                else if (SiempreSalePlayerResults == PrizeTypeSiempreSale.PotentialWinnerTwoMatches)
+                {
+                    SiempreSalePotentialWinnersTwoMatches.Add(SSPlayer);
+                }
+                else if (SiempreSalePlayerResults == PrizeTypeSiempreSale.PotentialWinnerOneMatch)
+                {
+                    SiempreSalePotentialWinnersOneMatch.Add(SSPlayer);
+                }
+                else
+                {
+                    NoPrize.Add(SSPlayer);
+                }
+            }
 
+            if (SiempreSalePotentialWinnersSixMatches.Any())
+            {
+                foreach (Player SSPlayer in SiempreSalePotentialWinnersSixMatches)
+                {
+                    SiempreSalePrizeWinners.Add(SSPlayer);
+                }
+            }
+            else if (SiempreSalePotentialWinnersFiveMatches.Any())
+            {
+                foreach (Player SSPlayer in SiempreSalePotentialWinnersFiveMatches)
+                {
+                    SiempreSalePrizeWinners.Add(SSPlayer);
+                }
+            }
+            else if (SiempreSalePotentialWinnersFourMatches.Any())
+            {
+                foreach (Player SSPlayer in SiempreSalePotentialWinnersFourMatches)
+                {
+                    SiempreSalePrizeWinners.Add(SSPlayer);
+                }
+            }
+            else if (SiempreSalePotentialWinnersThreeMatches.Any())
+            {
+                foreach (Player SSPlayer in SiempreSalePotentialWinnersThreeMatches)
+                {
+                    SiempreSalePrizeWinners.Add(SSPlayer);
+                }
+            }
+            else if (SiempreSalePotentialWinnersTwoMatches.Any())
+            {
+                foreach (Player SSPlayer in SiempreSalePotentialWinnersTwoMatches)
+                {
+                    SiempreSalePrizeWinners.Add(SSPlayer);
+                }
+            }
+            else if (SiempreSalePotentialWinnersOneMatch.Any())
+            {
+                foreach (Player SSPlayer in SiempreSalePotentialWinnersOneMatch)
+                {
+                    SiempreSalePrizeWinners.Add(SSPlayer);
+                }
+            }
+
+            foreach (Player SSPlayer in Results.Players)
+            {
+                if (!SiempreSalePrizeWinners.Contains(SSPlayer))
+                {
+                    NoPrize.Add(SSPlayer);
+                }
             }
 
         }

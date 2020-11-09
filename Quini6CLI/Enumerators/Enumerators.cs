@@ -14,5 +14,54 @@ namespace Quini6CLI.Enumerators
             SiempreSale,
             PozoExtra
         }
+        public enum Matches
+        {
+            NoMatches,
+            OneMatch,
+            TwoMatches,
+            ThreeMatches,
+            FourMatches,
+            FiveMatches,
+            SixMatches
+        }
+
+        public enum PrizeTypeTradicionalPrimera
+        {
+            FirstPrize,
+            SecondPrize,
+            ThirdPrize,
+            NoPrize
+        }
+
+        public enum PrizeTypeTradicionalSegunda
+        {
+            FirstPrize,
+            SecondPrize,
+            ThirdPrize,
+            NoPrize
+        }
+
+        public enum PrizeTypeRevancha
+        {
+            FirstPrize,
+            NoPrize
+        }
+
+        public enum PrizeTypeSiempreSale
+        {
+            PotentialWinnerSixMatches,
+            PotentialWinnerFiveMatches,
+            PotentialWinnerFourMatches,
+            PotentialWinnerThreeMatches,
+            PotentialWinnerTwoMatches,
+            PotentialWinnerOneMatch,
+            NoPrize
+        }
+
+        public enum PrizeTypePozoExtra
+        {
+            FirstPrize,
+            NoPrize
+        }
     }
 }
