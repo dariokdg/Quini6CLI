@@ -1,9 +1,10 @@
-﻿using Quini6CLI.Interfaces;
-using Quini6CLI.Core;
-using System.Collections.Generic;
-using Quini6CLI.Providers;
-using static Quini6CLI.Enumerators.Enumerators;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Quini6CLI.Interfaces;
+using Quini6CLI.Core;
+using Quini6CLI.Providers;
+using Quini6CLI.Winners;
+using static Quini6CLI.Enumerators.Enumerators;
 
 namespace Quini6CLI.Checkers
 {
@@ -21,7 +22,7 @@ namespace Quini6CLI.Checkers
             this.SiempreSalePrize = SiempreSalePrize;
         }
 
-        public void CheckPrizes()
+        public SiempreSaleWinners CheckPrizes()
         {
             List<Player> SiempreSalePrizeWinners = new List<Player>();
             List<Player> SiempreSalePotentialWinnersSixMatches = new List<Player>();
@@ -116,6 +117,14 @@ namespace Quini6CLI.Checkers
                     NoPrize.Add(SSPlayer);
                 }
             }
+
+            SiempreSaleWinners SSW = new SiempreSaleWinners(
+                SiempreSalePrize,
+                SiempreSalePrizeWinners
+                );
+
+            return SSW;
+
 
         }
     }

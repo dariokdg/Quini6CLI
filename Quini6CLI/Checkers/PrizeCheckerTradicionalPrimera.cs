@@ -1,7 +1,8 @@
-﻿using Quini6CLI.Interfaces;
+﻿using System.Collections.Generic;
+using Quini6CLI.Interfaces;
 using Quini6CLI.Core;
-using System.Collections.Generic;
 using Quini6CLI.Providers;
+using Quini6CLI.Winners;
 using static Quini6CLI.Enumerators.Enumerators;
 
 namespace Quini6CLI.Checkers
@@ -26,7 +27,7 @@ namespace Quini6CLI.Checkers
             this.TradicionalPrimeraThirdPrize = TradicionalPrimeraThirdPrize;
         }
 
-        public void CheckPrizes()
+        public TradicionalPrimeraWinners CheckPrizes()
         {
             List<Player> TradicionalPrimeraFirstPrizeWinners = new List<Player>();
             List<Player> TradicionalPrimeraSecondPrizeWinners = new List<Player>();
@@ -75,6 +76,16 @@ namespace Quini6CLI.Checkers
                 }
             }
 
+            TradicionalPrimeraWinners TPW = new TradicionalPrimeraWinners(
+                TradicionalPrimeraFirstPrize, 
+                TradicionalPrimeraFirstPrizeWinners, 
+                TradicionalPrimeraSecondPrize, 
+                TradicionalPrimeraSecondPrizeWinners, 
+                TradicionalPrimeraThirdPrize, 
+                TradicionalPrimeraThirdPrizeWinners
+                );
+
+            return TPW;
         }
 
     }

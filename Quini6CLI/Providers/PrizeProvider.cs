@@ -82,7 +82,7 @@ namespace Quini6CLI.Providers
             switch (RevanchaMatches)
             {
                 case Matches.SixMatches:
-                    return PrizeTypeRevancha.FirstPrize;
+                    return PrizeTypeRevancha.Prize;
                 case Matches.FiveMatches:
                 case Matches.FourMatches:
                 case Matches.ThreeMatches:
@@ -125,7 +125,7 @@ namespace Quini6CLI.Providers
             switch (PozoExtraMatches)
             {
                 case Matches.SixMatches:
-                    return PrizeTypePozoExtra.FirstPrize;
+                    return PrizeTypePozoExtra.Prize;
                 case Matches.FiveMatches:
                 case Matches.FourMatches:
                 case Matches.ThreeMatches:

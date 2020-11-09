@@ -43,7 +43,7 @@ namespace Quini6CLI.Enumerators
 
         public enum PrizeTypeRevancha
         {
-            FirstPrize,
+            Prize,
             NoPrize
         }
 
@@ -60,7 +60,7 @@ namespace Quini6CLI.Enumerators
 
         public enum PrizeTypePozoExtra
         {
-            FirstPrize,
+            Prize,
             NoPrize
         }
     }
