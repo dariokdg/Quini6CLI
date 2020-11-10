@@ -42,15 +42,15 @@ namespace Quini6CLI.Core
             Console.WriteLine("QUINI 6: " + DateTime.Now.ToString());
             Console.WriteLine("----------------------");
             PrintPrizes();
-            ResultGenerator Q6RG = new ResultGenerator();
-            List<GameTypeResult> Drawings = ExecuteDrawings(Q6RG);
+            List<GameTypeResult> Drawings = ExecuteDrawings();
             PrintDrawingResults(Drawings);
             Quini6Winners Q6W = CalculateWinners(Drawings);
             PrintWinners(Q6W);
         }
 
-        private List<GameTypeResult> ExecuteDrawings(IResultGenerator Q6RG)
+        private List<GameTypeResult> ExecuteDrawings()
         {
+            ResultGenerator Q6RG = new ResultGenerator();
             GameTypeResult GTRTP = ExecuteTradicionalPrimera(Q6RG);
             GameTypeResult GTRTS = ExecuteTradicionalSegunda(Q6RG);
             GameTypeResult GTRR = ExecuteRevancha(Q6RG);
@@ -235,6 +235,156 @@ namespace Quini6CLI.Core
             Results.AddRow("SIEMPRE SALE", "MAIN PRIZE", SiempreSalePrize.ToString("c2"), SSW.SiempreSalePrizeWinners.Count, SSW.SiempreSaleWinnersNumberofMatches, SSW.SiempreSalePrizeAmountPerWinner.ToString("c2"));
             Results.AddRow("POZO EXTRA", "MAIN PRIZE", PozoExtraPrize.ToString("c2"), PEW.PozoExtraPrizeWinners.Count, "6", PEW.PozoExtraPrizeAmountPerWinner.ToString("c2"));
             Results.Write(Format.Alternative);
+
+            if (TPW.TradicionalPrimeraFirstPrizeWinners.Count == 0 &&
+                TPW.TradicionalPrimeraSecondPrizeWinners.Count == 0 &&
+                TPW.TradicionalPrimeraThirdPrizeWinners.Count == 0 &&
+                TSW.TradicionalSegundaFirstPrizeWinners.Count == 0 &&
+                TSW.TradicionalSegundaSecondPrizeWinners.Count == 0 &&
+                TSW.TradicionalSegundaThirdPrizeWinners.Count == 0 &&
+                RW.RevanchaPrizeWinners.Count == 0 &&
+                SSW.SiempreSalePrizeWinners.Count == 0 &&
+                PEW.PozoExtraPrizeWinners.Count == 0
+                )
+            {
+                Console.WriteLine("");
+                Console.WriteLine("");
+                Console.WriteLine("");
+                Console.WriteLine("----------------------");
+                Console.WriteLine($"THERE WERE NO WINNERS");
+                Console.WriteLine("----------------------");
+                Console.WriteLine("");
+            }
+            else
+            {
+                Console.WriteLine("");
+                Console.WriteLine("");
+                Console.WriteLine("");
+                Console.WriteLine("----------------------");
+                Console.WriteLine($"QUINI 6 WINNERS:");
+                Console.WriteLine("----------------------");
+                Console.WriteLine("");
+
+                ConsoleTable Winners = new ConsoleTable("GAME TYPE", "PRIZE CATEGORY", "WINNER'S NAME", "WINNER'S SELECTED NUMBERS", "NUMBER OF HITS", "AMOUNT WON");
+                if (TPW.TradicionalPrimeraFirstPrizeWinners.Count > 0)
+                {
+                    foreach (Player TPFPWinner in TPW.TradicionalPrimeraFirstPrizeWinners)
+                    {
+                        string SelectedNumbers = string.Empty;
+                        foreach (int Number in TPFPWinner.SelectedNumbers)
+                        {
+                            SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
+                        }
+                        SelectedNumbers = SelectedNumbers.Substring(0, SelectedNumbers.Length - 3);
+                        Winners.AddRow("TRADICIONAL PRIMERA", "FIRST PRIZE", TPFPWinner.Name, SelectedNumbers, "6", TPW.TradicionalPrimeraFirstPrizeAmountPerWinner.ToString("c2"));
+                    }
+                }
+                if (TPW.TradicionalPrimeraSecondPrizeWinners.Count > 0)
+                {
+                    foreach (Player TPSPWinner in TPW.TradicionalPrimeraSecondPrizeWinners)
+                    {
+                        string SelectedNumbers = string.Empty;
+                        foreach (int Number in TPSPWinner.SelectedNumbers)
+                        {
+                            SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
+                        }
+                        SelectedNumbers = SelectedNumbers.Substring(0, SelectedNumbers.Length - 3);
+                        Winners.AddRow("TRADICIONAL PRIMERA", "SECOND PRIZE", TPSPWinner.Name, SelectedNumbers, "5", TPW.TradicionalPrimeraSecondPrizeAmountPerWinner.ToString("c2"));
+                    }
+                }
+                if (TPW.TradicionalPrimeraThirdPrizeWinners.Count > 0)
+                {
+                    foreach (Player TPTPWinner in TPW.TradicionalPrimeraThirdPrizeWinners)
+                    {
+                        string SelectedNumbers = string.Empty;
+                        foreach (int Number in TPTPWinner.SelectedNumbers)
+                        {
+                            SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
+                        }
+                        SelectedNumbers = SelectedNumbers.Substring(0, SelectedNumbers.Length - 3);
+                        Winners.AddRow("TRADICIONAL PRIMERA", "THIRD PRIZE", TPTPWinner.Name, SelectedNumbers, "4", TPW.TradicionalPrimeraThirdPrizeAmountPerWinner.ToString("c2"));
+                    }
+                }
+                if (TSW.TradicionalSegundaFirstPrizeWinners.Count > 0)
+                {
+                    foreach (Player TSFPWinner in TSW.TradicionalSegundaFirstPrizeWinners)
+                    {
+                        string SelectedNumbers = string.Empty;
+                        foreach (int Number in TSFPWinner.SelectedNumbers)
+                        {
+                            SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
+                        }
+                        SelectedNumbers = SelectedNumbers.Substring(0, SelectedNumbers.Length - 3);
+                        Winners.AddRow("TRADICIONAL SEGUNDA", "FIRST PRIZE", TSFPWinner.Name, SelectedNumbers, "6", TSW.TradicionalSegundaFirstPrizeAmountPerWinner.ToString("c2"));
+                    }
+                }
+                if (TSW.TradicionalSegundaSecondPrizeWinners.Count > 0)
+                {
+                    foreach (Player TSSPWinner in TSW.TradicionalSegundaSecondPrizeWinners)
+                    {
+                        string SelectedNumbers = string.Empty;
+                        foreach (int Number in TSSPWinner.SelectedNumbers)
+                        {
+                            SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
+                        }
+                        SelectedNumbers = SelectedNumbers.Substring(0, SelectedNumbers.Length - 3);
+                        Winners.AddRow("TRADICIONAL SEGUNDA", "SECOND PRIZE", TSSPWinner.Name, SelectedNumbers, "5", TSW.TradicionalSegundaSecondPrizeAmountPerWinner.ToString("c2"));
+                    }
+                }
+                if (TSW.TradicionalSegundaThirdPrizeWinners.Count > 0)
+                {
+                    foreach (Player TSTPWinner in TSW.TradicionalSegundaThirdPrizeWinners)
+                    {
+                        string SelectedNumbers = string.Empty;
+                        foreach (int Number in TSTPWinner.SelectedNumbers)
+                        {
+                            SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
+                        }
+                        SelectedNumbers = SelectedNumbers.Substring(0, SelectedNumbers.Length - 3);
+                        Winners.AddRow("TRADICIONAL SEGUNDA", "THIRD PRIZE", TSTPWinner.Name, SelectedNumbers, "4", TSW.TradicionalSegundaThirdPrizeAmountPerWinner.ToString("c2"));
+                    }
+                }
+                if (RW.RevanchaPrizeWinners.Count > 0)
+                {
+                    foreach (Player RPWinner in RW.RevanchaPrizeWinners)
+                    {
+                        string SelectedNumbers = string.Empty;
+                        foreach (int Number in RPWinner.SelectedNumbers)
+                        {
+                            SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
+                        }
+                        SelectedNumbers = SelectedNumbers.Substring(0, SelectedNumbers.Length - 3);
+                        Winners.AddRow("REVANCHA", "MAIN PRIZE", RPWinner.Name, SelectedNumbers, "6", RW.RevanchaPrizeAmountPerWinner.ToString("c2"));
+                    }
+                }
+                if (SSW.SiempreSalePrizeWinners.Count > 0)
+                {
+                    foreach (Player SSPWinner in SSW.SiempreSalePrizeWinners)
+                    {
+                        string SelectedNumbers = string.Empty;
+                        foreach (int Number in SSPWinner.SelectedNumbers)
+                        {
+                            SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
+                        }
+                        SelectedNumbers = SelectedNumbers.Substring(0, SelectedNumbers.Length - 3);
+                        Winners.AddRow("SIEMPRE SALE", "MAIN PRIZE", SSPWinner.Name, SelectedNumbers, SSW.SiempreSaleWinnersNumberofMatches, SSW.SiempreSalePrizeAmountPerWinner.ToString("c2"));
+                    }
+                }
+                if (PEW.PozoExtraPrizeWinners.Count > 0)
+                {
+                    foreach (Player PEPWinner in PEW.PozoExtraPrizeWinners)
+                    {
+                        string SelectedNumbers = string.Empty;
+                        foreach (int Number in PEPWinner.SelectedNumbers)
+                        {
+                            SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
+                        }
+                        SelectedNumbers = SelectedNumbers.Substring(0, SelectedNumbers.Length - 3);
+                        Winners.AddRow("POZO EXTRA", "MAIN PRIZE", PEPWinner.Name, SelectedNumbers, "6", PEW.PozoExtraPrizeAmountPerWinner.ToString("c2"));
+                    }
+                }
+                Winners.Write(Format.Alternative);
+            }
         }
     }
 }
