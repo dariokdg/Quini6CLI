@@ -32,7 +32,9 @@ namespace Quini6CLI.Checkers
             List<Player> TradicionalPrimeraFirstPrizeWinners = new List<Player>();
             List<Player> TradicionalPrimeraSecondPrizeWinners = new List<Player>();
             List<Player> TradicionalPrimeraThirdPrizeWinners = new List<Player>();
-            List<Player> NoPrizeTradicionalPrimera = new List<Player>();
+            List<Player> NoPrizeTradicionalPrimeraFP = new List<Player>();
+            List<Player> NoPrizeTradicionalPrimeraSP = new List<Player>();
+            List<Player> NoPrizeTradicionalPrimeraTP = new List<Player>();
 
             //Tradicional Primera First Prize
             foreach (Player TPPlayer in Results.Players)
@@ -46,12 +48,12 @@ namespace Quini6CLI.Checkers
                 }
                 else
                 {
-                    NoPrizeTradicionalPrimera.Add(TPPlayer);
+                    NoPrizeTradicionalPrimeraFP.Add(TPPlayer);
                 }
             }
 
             //Tradicional Primera Second Prize
-            foreach (Player TPPlayer in NoPrizeTradicionalPrimera)
+            foreach (Player TPPlayer in NoPrizeTradicionalPrimeraFP)
             {
                 ResultChecker RC = new ResultChecker();
                 PrizeProvider PP = new PrizeProvider();
@@ -59,12 +61,15 @@ namespace Quini6CLI.Checkers
                 {
                     //Winner winner chicken dinner
                     TradicionalPrimeraSecondPrizeWinners.Add(TPPlayer);
-                    NoPrizeTradicionalPrimera.Remove(TPPlayer);
+                }
+                else
+                {
+                    NoPrizeTradicionalPrimeraSP.Add(TPPlayer);
                 }
             }
 
             //Tradicional Primera Third Prize
-            foreach (Player TPPlayer in NoPrizeTradicionalPrimera)
+            foreach (Player TPPlayer in NoPrizeTradicionalPrimeraSP)
             {
                 ResultChecker RC = new ResultChecker();
                 PrizeProvider PP = new PrizeProvider();
@@ -72,7 +77,10 @@ namespace Quini6CLI.Checkers
                 {
                     //Winner winner chicken dinner
                     TradicionalPrimeraThirdPrizeWinners.Add(TPPlayer);
-                    NoPrizeTradicionalPrimera.Remove(TPPlayer);
+                }
+                else
+                {
+                    NoPrizeTradicionalPrimeraTP.Add(TPPlayer);
                 }
             }
 

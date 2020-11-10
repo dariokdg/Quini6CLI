@@ -38,18 +38,19 @@ namespace Quini6CLI.Core
 
         public void ExecuteQuini6Game()
         {
-            Console.WriteLine("STARTING QUINI 6 GAME:");
+            Console.WriteLine("----------------------");
+            Console.WriteLine("QUINI 6: " + DateTime.Now.ToString());
+            Console.WriteLine("----------------------");
             PrintPrizes();
             ResultGenerator Q6RG = new ResultGenerator();
             List<GameTypeResult> Drawings = ExecuteDrawings(Q6RG);
+            PrintDrawingResults(Drawings);
             Quini6Winners Q6W = CalculateWinners(Drawings);
             PrintWinners(Q6W);
         }
 
         private List<GameTypeResult> ExecuteDrawings(IResultGenerator Q6RG)
         {
-            Console.WriteLine("----------------------");
-            Console.WriteLine("DRAWING RESULTS:");
             GameTypeResult GTRTP = ExecuteTradicionalPrimera(Q6RG);
             GameTypeResult GTRTS = ExecuteTradicionalSegunda(Q6RG);
             GameTypeResult GTRR = ExecuteRevancha(Q6RG);
@@ -61,7 +62,7 @@ namespace Quini6CLI.Core
         private GameTypeResult ExecuteTradicionalPrimera(IResultGenerator Q6RG)
         {
             TradicionalPrimeraNumbers = Q6RG.GenerateDrawingResults();
-            PrintResults("Tradicional Primera", TradicionalPrimeraNumbers);
+            TradicionalPrimeraNumbers.Sort();
             GameTypeResult GTR = new GameTypeResult(Players, Enumerators.Enumerators.GameType.TradicionalPrimera, TradicionalPrimeraNumbers);
             return GTR;
         }
@@ -69,7 +70,7 @@ namespace Quini6CLI.Core
         private GameTypeResult ExecuteTradicionalSegunda(IResultGenerator Q6RG)
         {
             TradicionalSegundaNumbers = Q6RG.GenerateDrawingResults();
-            PrintResults("Tradicional Segunda", TradicionalSegundaNumbers);
+            TradicionalSegundaNumbers.Sort();
             GameTypeResult GTR = new GameTypeResult(Players, Enumerators.Enumerators.GameType.TradicionalSegunda, TradicionalSegundaNumbers);
             return GTR;
         }
@@ -77,7 +78,7 @@ namespace Quini6CLI.Core
         private GameTypeResult ExecuteRevancha(IResultGenerator Q6RG)
         {
             RevanchaNumbers = Q6RG.GenerateDrawingResults();
-            PrintResults("Revancha", RevanchaNumbers);
+            RevanchaNumbers.Sort();
             Players = Players.Where(p => p.Games == Player.GameParticipation.TradicionalAndRevancha || p.Games == Player.GameParticipation.TradicionalAndRevanchaAndSiempreSale).ToList();
             GameTypeResult GTR = new GameTypeResult(Players, Enumerators.Enumerators.GameType.Revancha, RevanchaNumbers);
             return GTR;
@@ -86,7 +87,7 @@ namespace Quini6CLI.Core
         private GameTypeResult ExecuteSiempreSale(IResultGenerator Q6RG)
         {
             SiempreSaleNumbers = Q6RG.GenerateDrawingResults();
-            PrintResults("Siempre Sale", SiempreSaleNumbers);
+            SiempreSaleNumbers.Sort();
             Players = Players.Where(p => p.Games == Player.GameParticipation.TradicionalAndSiempreSale || p.Games == Player.GameParticipation.TradicionalAndRevanchaAndSiempreSale).ToList();
             GameTypeResult GTR = new GameTypeResult(Players, Enumerators.Enumerators.GameType.SiempreSale, SiempreSaleNumbers);
             return GTR;
@@ -100,7 +101,6 @@ namespace Quini6CLI.Core
             TemporaryList.AddRange(RevanchaNumbers);
             PozoExtraNumbers = TemporaryList.Distinct().ToList();
             PozoExtraNumbers.Sort();
-            PrintResults("Pozo Extra", PozoExtraNumbers);
             GameTypeResult GTR = new GameTypeResult(Players, Enumerators.Enumerators.GameType.PozoExtra, PozoExtraNumbers);
             return GTR;
         }
@@ -132,96 +132,80 @@ namespace Quini6CLI.Core
 
         private void PrintPrizes()
         {
+            Console.WriteLine("");
+            Console.WriteLine("");
             Console.WriteLine("----------------------");
-            Console.WriteLine("PRIZE LIST:");
+            Console.WriteLine("QUINI 6 PRIZE LIST:");
             Console.WriteLine("----------------------");
-            Console.WriteLine();
-            Console.WriteLine("TRADICIONAL PRIMERA:");
-            Console.WriteLine();
-            ConsoleTable TradicionalPrimera = new ConsoleTable("FIRST PRIZE (6 matches)", "SECOND PRIZE (5 matches)", "THIRD PRIZE (4 matches)");
-            TradicionalPrimera.AddRow(TradicionalPrimeraFirstPrize.ToString("c2"), TradicionalPrimeraSecondPrize.ToString("c2"), TradicionalPrimeraThirdPrize.ToString("c2"));
-            TradicionalPrimera.Write(Format.Alternative);
-            Console.WriteLine();
-            Console.WriteLine("----------------------");
-            Console.WriteLine();
-            Console.WriteLine("TRADICIONAL SEGUNDA:");
-            Console.WriteLine();
-            ConsoleTable TradicionalSegunda = new ConsoleTable("FIRST PRIZE (6 matches)", "SECOND PRIZE (5 matches)", "THIRD PRIZE (4 matches)");
-            TradicionalSegunda.AddRow(TradicionalSegundaFirstPrize.ToString("c2"), TradicionalSegundaSecondPrize.ToString("c2"), TradicionalSegundaThirdPrize.ToString("c2"));
-            TradicionalSegunda.Write(Format.Alternative);
-            Console.WriteLine();
-            Console.WriteLine("----------------------");
-            Console.WriteLine();
-            Console.WriteLine("REVANCHA:");
-            Console.WriteLine();
-            ConsoleTable Revancha = new ConsoleTable("MAIN PRIZE (6 matches)");
-            Revancha.AddRow(RevanchaPrize.ToString("c2"));
-            Revancha.Write(Format.Alternative);
-            Console.WriteLine();
-            Console.WriteLine("----------------------");
-            Console.WriteLine();
-            Console.WriteLine("SIEMPRE SALE:");
-            Console.WriteLine();
-            ConsoleTable SiempreSale = new ConsoleTable("MAIN PRIZE");
-            SiempreSale.AddRow(SiempreSalePrize.ToString("c2"));
-            SiempreSale.Write(Format.Alternative);
-            Console.WriteLine();
-            Console.WriteLine("----------------------");
-            Console.WriteLine();
-            Console.WriteLine("POZO EXTRA:");
-            Console.WriteLine();
-            ConsoleTable PozoExtra = new ConsoleTable("MAIN PRIZE");
-            PozoExtra.AddRow(PozoExtraPrize.ToString("c2"));
-            PozoExtra.Write(Format.Alternative);
-            Console.WriteLine();
-            Console.WriteLine("----------------------");
+            Console.WriteLine("");
+
+            ConsoleTable Results = new ConsoleTable("GAME TYPE", "PRIZE CATEGORY", "NUMBER OF HITS", "TOTAL PRIZE");
+            Results.AddRow("TRADICIONAL PRIMERA", "FIRST PRIZE", "6", TradicionalPrimeraFirstPrize.ToString("c2"));
+            Results.AddRow("TRADICIONAL PRIMERA", "SECOND PRIZE", "5", TradicionalPrimeraSecondPrize.ToString("c2"));
+            Results.AddRow("TRADICIONAL PRIMERA", "THIRD PRIZE", "4", TradicionalPrimeraThirdPrize.ToString("c2"));
+            Results.AddRow("TRADICIONAL SEGUNDA", "FIRST PRIZE", "6", TradicionalSegundaFirstPrize.ToString("c2"));
+            Results.AddRow("TRADICIONAL SEGUNDA", "SECOND PRIZE", "5", TradicionalSegundaSecondPrize.ToString("c2"));
+            Results.AddRow("TRADICIONAL SEGUNDA", "THIRD PRIZE", "4", TradicionalSegundaThirdPrize.ToString("c2"));
+            Results.AddRow("REVANCHA", "MAIN PRIZE", "6", RevanchaPrize.ToString("c2"));
+            Results.AddRow("SIEMPRE SALE", "MAIN PRIZE", "6/5/4/3/2/1", SiempreSalePrize.ToString("c2"));
+            Results.AddRow("POZO EXTRA", "MAIN PRIZE", "6", PozoExtraPrize.ToString("c2"));
+            Results.Write(Format.Alternative);
         }
 
-        private void PrintResults(string GameType, List<int> Numbers)
+        private void PrintDrawingResults(List<GameTypeResult> DrawingResults)
         {
+            GameTypeResult GTRTP = DrawingResults[0];
+            GameTypeResult GTRTS = DrawingResults[1];
+            GameTypeResult GTRR = DrawingResults[2];
+            GameTypeResult GTRSS = DrawingResults[3];
+            GameTypeResult GTRPE = DrawingResults[4];
+
+
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("");
             Console.WriteLine("----------------------");
-            Console.WriteLine();
-            Console.WriteLine($"{GameType.ToUpper()} RESULTS:");
-            Console.WriteLine();
-            if (GameType != "Pozo Extra")
+            Console.WriteLine($"QUINI 6 DRAWINGS:");
+            Console.WriteLine("----------------------");
+            Console.WriteLine("");
+            ConsoleTable Results = new ConsoleTable("GAME TYPE", "FIRST NUMBER", "SECOND NUMBER", "THIRD NUMBER", "FOURTH NUMBER", "FIFTH NUMBER", "SIXTH NUMBER");
+            Results.AddRow("TRADICIONAL PRIMERA", GTRTP.DrawingResults[0].ToString("D2"), GTRTP.DrawingResults[1].ToString("D2"), GTRTP.DrawingResults[2].ToString("D2"), GTRTP.DrawingResults[3].ToString("D2"), GTRTP.DrawingResults[4].ToString("D2"), GTRTP.DrawingResults[5].ToString("D2"));
+            Results.AddRow("TRADICIONAL SEGUNDA", GTRTS.DrawingResults[0].ToString("D2"), GTRTS.DrawingResults[1].ToString("D2"), GTRTS.DrawingResults[2].ToString("D2"), GTRTS.DrawingResults[3].ToString("D2"), GTRTS.DrawingResults[4].ToString("D2"), GTRTS.DrawingResults[5].ToString("D2"));
+            Results.AddRow("REVANCHA", GTRR.DrawingResults[0].ToString("D2"), GTRR.DrawingResults[1].ToString("D2"), GTRR.DrawingResults[2].ToString("D2"), GTRR.DrawingResults[3].ToString("D2"), GTRR.DrawingResults[4].ToString("D2"), GTRR.DrawingResults[5].ToString("D2"));
+            Results.AddRow("SIEMPRE SALE", GTRSS.DrawingResults[0].ToString("D2"), GTRSS.DrawingResults[1].ToString("D2"), GTRSS.DrawingResults[2].ToString("D2"), GTRSS.DrawingResults[3].ToString("D2"), GTRSS.DrawingResults[4].ToString("D2"), GTRSS.DrawingResults[5].ToString("D2"));
+            Results.Write(Format.Alternative);
+
+            Console.WriteLine("");
+            Console.WriteLine($"POZO EXTRA:");
+            List<int> Numbers = GTRPE.DrawingResults;
+            string Number01 = Numbers.Count() >= 01 ? Numbers[00].ToString("D2") : " ";
+            string Number02 = Numbers.Count() >= 02 ? Numbers[01].ToString("D2") : " ";
+            string Number03 = Numbers.Count() >= 03 ? Numbers[02].ToString("D2") : " ";
+            string Number04 = Numbers.Count() >= 04 ? Numbers[03].ToString("D2") : " ";
+            string Number05 = Numbers.Count() >= 05 ? Numbers[04].ToString("D2") : " ";
+            string Number06 = Numbers.Count() >= 06 ? Numbers[05].ToString("D2") : " ";
+            string Number07 = Numbers.Count() >= 07 ? Numbers[06].ToString("D2") : " ";
+            string Number08 = Numbers.Count() >= 08 ? Numbers[07].ToString("D2") : " ";
+            string Number09 = Numbers.Count() >= 09 ? Numbers[08].ToString("D2") : " ";
+            string Number10 = Numbers.Count() >= 10 ? Numbers[09].ToString("D2") : " ";
+            string Number11 = Numbers.Count() >= 11 ? Numbers[10].ToString("D2") : " ";
+            string Number12 = Numbers.Count() >= 12 ? Numbers[11].ToString("D2") : " ";
+            string Number13 = Numbers.Count() >= 13 ? Numbers[12].ToString("D2") : " ";
+            string Number14 = Numbers.Count() >= 14 ? Numbers[13].ToString("D2") : " ";
+            string Number15 = Numbers.Count() >= 15 ? Numbers[14].ToString("D2") : " ";
+            string Number16 = Numbers.Count() >= 16 ? Numbers[15].ToString("D2") : " ";
+            string Number17 = Numbers.Count() >= 17 ? Numbers[16].ToString("D2") : " ";
+            string Number18 = Numbers.Count() == 18 ? Numbers[17].ToString("D2") : " ";
+            ConsoleTable PozoExtraResults = new ConsoleTable(Number01, Number02, Number03, Number04, Number05, Number06);
+            if (!string.IsNullOrWhiteSpace(Number07))
             {
-                ConsoleTable Results = new ConsoleTable("FIRST NUMBER", "SECOND NUMBER", "THIRD NUMBER", "FOURTH NUMBER", "FIFTH NUMBER", "SIXTH NUMBER");
-                Results.AddRow(Numbers[0].ToString("D2"), Numbers[1].ToString("D2"), Numbers[2].ToString("D2"), Numbers[3].ToString("D2"), Numbers[4].ToString("D2"), Numbers[5].ToString("D2"));
-                Results.Write(Format.Alternative);
-            }
-            else
-            {
-                string Number01 = Numbers.Count() >= 01 ? Numbers[00].ToString("D2") : " ";
-                string Number02 = Numbers.Count() >= 02 ? Numbers[01].ToString("D2") : " ";
-                string Number03 = Numbers.Count() >= 03 ? Numbers[02].ToString("D2") : " ";
-                string Number04 = Numbers.Count() >= 04 ? Numbers[03].ToString("D2") : " ";
-                string Number05 = Numbers.Count() >= 05 ? Numbers[04].ToString("D2") : " ";
-                string Number06 = Numbers.Count() >= 06 ? Numbers[05].ToString("D2") : " ";
-                string Number07 = Numbers.Count() >= 07 ? Numbers[06].ToString("D2") : " ";
-                string Number08 = Numbers.Count() >= 08 ? Numbers[07].ToString("D2") : " ";
-                string Number09 = Numbers.Count() >= 09 ? Numbers[08].ToString("D2") : " ";
-                string Number10 = Numbers.Count() >= 10 ? Numbers[09].ToString("D2") : " ";
-                string Number11 = Numbers.Count() >= 11 ? Numbers[10].ToString("D2") : " ";
-                string Number12 = Numbers.Count() >= 12 ? Numbers[11].ToString("D2") : " ";
-                string Number13 = Numbers.Count() >= 13 ? Numbers[12].ToString("D2") : " ";
-                string Number14 = Numbers.Count() >= 14 ? Numbers[13].ToString("D2") : " ";
-                string Number15 = Numbers.Count() >= 15 ? Numbers[14].ToString("D2") : " ";
-                string Number16 = Numbers.Count() >= 16 ? Numbers[15].ToString("D2") : " ";
-                string Number17 = Numbers.Count() >= 17 ? Numbers[16].ToString("D2") : " ";
-                string Number18 = Numbers.Count() == 18 ? Numbers[17].ToString("D2") : " ";
-                ConsoleTable Results = new ConsoleTable(Number01, Number02, Number03, Number04, Number05, Number06);
-                if (!string.IsNullOrWhiteSpace(Number07))
+                PozoExtraResults.AddRow(Number07, Number08, Number09, Number10, Number11, Number12);
+                if (!string.IsNullOrWhiteSpace(Number13))
                 {
-                    Results.AddRow(Number07, Number08, Number09, Number10, Number11, Number12);
-                    if (!string.IsNullOrWhiteSpace(Number13))
-                    {
-                        Results.AddRow(Number13, Number14, Number15, Number16, Number17, Number18);
-                    }
+                    PozoExtraResults.AddRow(Number13, Number14, Number15, Number16, Number17, Number18);
                 }
-                Results.Write(Format.Alternative);
             }
-            Console.WriteLine();
-            Console.WriteLine("----------------------");
+            PozoExtraResults.Write(Format.Alternative);
         }
 
         private void PrintWinners(Quini6Winners Q6W)
@@ -232,81 +216,25 @@ namespace Quini6CLI.Core
             SiempreSaleWinners SSW = Q6W.SSW;
             PozoExtraWinners PEW = Q6W.PEW;
 
-
             Console.WriteLine("");
             Console.WriteLine("");
             Console.WriteLine("");
             Console.WriteLine("----------------------");
-            Console.WriteLine($"QUINI 6 DRAWING WINNERS:");
+            Console.WriteLine($"QUINI 6 RESULTS:");
             Console.WriteLine("----------------------");
             Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine($"Tradicional Primera:");
-            Console.WriteLine("----------------------");
-            ConsoleTable TPFP = new ConsoleTable("FIRST PRIZE (6 matches)", "NUMBER OF WINNERS", "EACH ONE GETS");
-            TPFP.AddRow(TradicionalPrimeraFirstPrize.ToString("c2"), TPW.TradicionalPrimeraFirstPrizeWinners.Count, TPW.TradicionalPrimeraFirstPrizeAmountPerWinner.ToString("c2"));
-            TPFP.Write(Format.Alternative);
-            Console.WriteLine("");
-            ConsoleTable TPSP = new ConsoleTable("SECOND PRIZE (5 matches)", "NUMBER OF WINNERS", "EACH ONE GETS");
-            TPSP.AddRow(TradicionalPrimeraSecondPrize.ToString("c2"), TPW.TradicionalPrimeraSecondPrizeWinners.Count, TPW.TradicionalPrimeraSecondPrizeAmountPerWinner.ToString("c2"));
-            TPSP.Write(Format.Alternative);
-            Console.WriteLine("");
-            ConsoleTable TPTP = new ConsoleTable("THIRD PRIZE (5 matches)", "NUMBER OF WINNERS", "EACH ONE GETS");
-            TPTP.AddRow(TradicionalPrimeraThirdPrize.ToString("c2"), TPW.TradicionalPrimeraThirdPrizeWinners.Count, TPW.TradicionalPrimeraThirdPrizeAmountPerWinner.ToString("c2"));
-            TPTP.Write(Format.Alternative);
 
-
-
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine($"Tradicional Segunda:");
-            Console.WriteLine("----------------------");
-            ConsoleTable TSFP = new ConsoleTable("FIRST PRIZE (6 matches)", "NUMBER OF WINNERS", "EACH ONE GETS");
-            TSFP.AddRow(TradicionalSegundaFirstPrize.ToString("c2"), TSW.TradicionalSegundaFirstPrizeWinners.Count, TSW.TradicionalSegundaFirstPrizeAmountPerWinner.ToString("c2"));
-            TSFP.Write(Format.Alternative);
-            Console.WriteLine("");
-            ConsoleTable TSSP = new ConsoleTable("SECOND PRIZE (5 matches)", "NUMBER OF WINNERS", "EACH ONE GETS");
-            TSSP.AddRow(TradicionalSegundaSecondPrize.ToString("c2"), TSW.TradicionalSegundaSecondPrizeWinners.Count, TSW.TradicionalSegundaSecondPrizeAmountPerWinner.ToString("c2"));
-            TSSP.Write(Format.Alternative);
-            Console.WriteLine("");
-            ConsoleTable TSTP = new ConsoleTable("THIRD PRIZE (5 matches)", "NUMBER OF WINNERS", "EACH ONE GETS");
-            TSTP.AddRow(TradicionalSegundaThirdPrize.ToString("c2"), TSW.TradicionalSegundaThirdPrizeWinners.Count, TSW.TradicionalSegundaThirdPrizeAmountPerWinner.ToString("c2"));
-            TSTP.Write(Format.Alternative);
-
-
-
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine($"Revancha:");
-            Console.WriteLine("----------------------");
-            ConsoleTable RP = new ConsoleTable("MAIN PRIZE (6 matches)", "NUMBER OF WINNERS", "EACH ONE GETS");
-            RP.AddRow(RevanchaPrize.ToString("c2"), RW.RevanchaPrizeWinners.Count, RW.RevanchaPrizeAmountPerWinner.ToString("c2"));
-            RP.Write(Format.Alternative);
-
-
-
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine($"Siempre Sale:");
-            Console.WriteLine("----------------------");
-            ConsoleTable SSP = new ConsoleTable("MAIN PRIZE", "NUMBER OF WINNERS", "MATCHING NUMBERS", "EACH ONE GETS");
-            SSP.AddRow(SiempreSalePrize.ToString("c2"), SSW.SiempreSalePrizeWinners.Count, SSW.SiempreSaleWinnersNumberofMatches, SSW.SiempreSalePrizeAmountPerWinner.ToString("c2"));
-            SSP.Write(Format.Alternative);
-
-
-
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine($"Pozo Extra:");
-            Console.WriteLine("----------------------");
-            ConsoleTable PEP = new ConsoleTable("MAIN PRIZE (6 matches)", "NUMBER OF WINNERS", "EACH ONE GETS");
-            PEP.AddRow(PozoExtraPrize.ToString("c2"), PEW.PozoExtraPrizeWinners.Count, PEW.PozoExtraPrizeAmountPerWinner.ToString("c2"));
-            PEP.Write(Format.Alternative);
+            ConsoleTable Results = new ConsoleTable("GAME TYPE", "PRIZE CATEGORY", "TOTAL PRIZE AMOUNT", "NUMBER OF WINNERS", "NUMBER OF HITS", "PRIZE FOR EACH WINNER");
+            Results.AddRow("TRADICIONAL PRIMERA", "FIRST PRIZE", TradicionalPrimeraFirstPrize.ToString("c2"), TPW.TradicionalPrimeraFirstPrizeWinners.Count, "6", TPW.TradicionalPrimeraFirstPrizeAmountPerWinner.ToString("c2"));
+            Results.AddRow("TRADICIONAL PRIMERA", "SECOND PRIZE", TradicionalPrimeraSecondPrize.ToString("c2"), TPW.TradicionalPrimeraSecondPrizeWinners.Count, "5", TPW.TradicionalPrimeraSecondPrizeAmountPerWinner.ToString("c2"));
+            Results.AddRow("TRADICIONAL PRIMERA", "THIRD PRIZE", TradicionalPrimeraThirdPrize.ToString("c2"), TPW.TradicionalPrimeraThirdPrizeWinners.Count, "4", TPW.TradicionalPrimeraThirdPrizeAmountPerWinner.ToString("c2"));
+            Results.AddRow("TRADICIONAL SEGUNDA", "FIRST PRIZE", TradicionalSegundaFirstPrize.ToString("c2"), TSW.TradicionalSegundaFirstPrizeWinners.Count, "6", TSW.TradicionalSegundaFirstPrizeAmountPerWinner.ToString("c2"));
+            Results.AddRow("TRADICIONAL SEGUNDA", "SECOND PRIZE", TradicionalSegundaSecondPrize.ToString("c2"), TSW.TradicionalSegundaSecondPrizeWinners.Count, "5", TSW.TradicionalSegundaSecondPrizeAmountPerWinner.ToString("c2"));
+            Results.AddRow("TRADICIONAL SEGUNDA", "THIRD PRIZE", TradicionalSegundaThirdPrize.ToString("c2"), TSW.TradicionalSegundaThirdPrizeWinners.Count, "4", TSW.TradicionalSegundaThirdPrizeAmountPerWinner.ToString("c2"));
+            Results.AddRow("REVANCHA", "MAIN PRIZE", RevanchaPrize.ToString("c2"), RW.RevanchaPrizeWinners.Count, "6", RW.RevanchaPrizeAmountPerWinner.ToString("c2"));
+            Results.AddRow("SIEMPRE SALE", "MAIN PRIZE", SiempreSalePrize.ToString("c2"), SSW.SiempreSalePrizeWinners.Count, SSW.SiempreSaleWinnersNumberofMatches, SSW.SiempreSalePrizeAmountPerWinner.ToString("c2"));
+            Results.AddRow("POZO EXTRA", "MAIN PRIZE", PozoExtraPrize.ToString("c2"), PEW.PozoExtraPrizeWinners.Count, "6", PEW.PozoExtraPrizeAmountPerWinner.ToString("c2"));
+            Results.Write(Format.Alternative);
         }
     }
 }
