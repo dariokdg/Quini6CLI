@@ -1,8 +1,7 @@
 {
   "profiles": {
     "Quini6CLI": {
-      "commandName": "Project",
-      "commandLineArgs": "10 --jackpot"
+      "commandName": "Project"
     }
   }
 }

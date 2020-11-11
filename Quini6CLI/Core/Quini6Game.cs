@@ -6,6 +6,7 @@ using System.Linq;
 using ConsoleTables;
 using Quini6CLI.Checkers;
 using Quini6CLI.Winners;
+using static Quini6CLI.Enumerators.Enumerators;
 
 namespace Quini6CLI.Core
 {
@@ -46,12 +47,27 @@ namespace Quini6CLI.Core
             Console.WriteLine("----------------------");
             Console.WriteLine($"NUMBER OF PLAYERS: {Players.Count}");
             Console.WriteLine("----------------------");
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("----------------------");
+            Console.WriteLine($"TOTAL SELLS: {CalculateTotalSells().ToString("c2")}");
+            Console.WriteLine("----------------------");
             PrintPrizes();
             List<GameTypeResult> Drawings = ExecuteDrawings();
             PrintDrawingResults(Drawings);
             Quini6Winners Q6W = CalculateWinners(Drawings);
             PrintWinners(Q6W);
             return Q6W;
+        }
+
+        private decimal CalculateTotalSells()
+        {
+            decimal TotalSells = 0;
+            foreach (Player Quini6Player in Players)
+            {
+                TotalSells += Quini6Player.CheckSpends();
+            }
+            return TotalSells;
         }
 
         private List<GameTypeResult> ExecuteDrawings()
@@ -69,7 +85,7 @@ namespace Quini6CLI.Core
         {
             TradicionalPrimeraNumbers = Q6RG.GenerateDrawingResults();
             TradicionalPrimeraNumbers.Sort();
-            GameTypeResult GTR = new GameTypeResult(Players, Enumerators.Enumerators.GameType.TradicionalPrimera, TradicionalPrimeraNumbers);
+            GameTypeResult GTR = new GameTypeResult(Players, GameType.TradicionalPrimera, TradicionalPrimeraNumbers);
             return GTR;
         }
 
@@ -85,8 +101,8 @@ namespace Quini6CLI.Core
         {
             RevanchaNumbers = Q6RG.GenerateDrawingResults();
             RevanchaNumbers.Sort();
-            Players = Players.Where(p => p.Games == Player.GameParticipation.TradicionalAndRevancha || p.Games == Player.GameParticipation.TradicionalAndRevanchaAndSiempreSale).ToList();
-            GameTypeResult GTR = new GameTypeResult(Players, Enumerators.Enumerators.GameType.Revancha, RevanchaNumbers);
+            Players = Players.Where(p => p.Quini6Ticket.Games == GameParticipation.TradicionalAndRevancha || p.Quini6Ticket.Games == GameParticipation.TradicionalAndRevanchaAndSiempreSale).ToList();
+            GameTypeResult GTR = new GameTypeResult(Players, GameType.Revancha, RevanchaNumbers);
             return GTR;
         }
 
@@ -94,8 +110,8 @@ namespace Quini6CLI.Core
         {
             SiempreSaleNumbers = Q6RG.GenerateDrawingResults();
             SiempreSaleNumbers.Sort();
-            Players = Players.Where(p => p.Games == Player.GameParticipation.TradicionalAndSiempreSale || p.Games == Player.GameParticipation.TradicionalAndRevanchaAndSiempreSale).ToList();
-            GameTypeResult GTR = new GameTypeResult(Players, Enumerators.Enumerators.GameType.SiempreSale, SiempreSaleNumbers);
+            Players = Players.Where(p => p.Quini6Ticket.Games == GameParticipation.TradicionalAndRevanchaAndSiempreSale).ToList();
+            GameTypeResult GTR = new GameTypeResult(Players, GameType.SiempreSale, SiempreSaleNumbers);
             return GTR;
         }
 
@@ -113,11 +129,11 @@ namespace Quini6CLI.Core
 
         private Quini6Winners CalculateWinners(List<GameTypeResult> Drawings)
         {
-            GameTypeResult GTRTP = Drawings.First(d => d.Quini6GameType == Enumerators.Enumerators.GameType.TradicionalPrimera);
-            GameTypeResult GTRTS = Drawings.First(d => d.Quini6GameType == Enumerators.Enumerators.GameType.TradicionalSegunda);
-            GameTypeResult GTRR = Drawings.First(d => d.Quini6GameType == Enumerators.Enumerators.GameType.Revancha);
-            GameTypeResult GTRSS = Drawings.First(d => d.Quini6GameType == Enumerators.Enumerators.GameType.SiempreSale);
-            GameTypeResult GTRPE = Drawings.First(d => d.Quini6GameType == Enumerators.Enumerators.GameType.PozoExtra);
+            GameTypeResult GTRTP = Drawings.First(d => d.Quini6GameType == GameType.TradicionalPrimera);
+            GameTypeResult GTRTS = Drawings.First(d => d.Quini6GameType == GameType.TradicionalSegunda);
+            GameTypeResult GTRR = Drawings.First(d => d.Quini6GameType == GameType.Revancha);
+            GameTypeResult GTRSS = Drawings.First(d => d.Quini6GameType == GameType.SiempreSale);
+            GameTypeResult GTRPE = Drawings.First(d => d.Quini6GameType == GameType.PozoExtra);
 
             PrizeCheckerTradicionalPrimera PCTP = new PrizeCheckerTradicionalPrimera(GTRTP, TradicionalPrimeraFirstPrize, TradicionalPrimeraSecondPrize, TradicionalPrimeraThirdPrize);
             PrizeCheckerTradicionalSegunda PCTS = new PrizeCheckerTradicionalSegunda(GTRTS, TradicionalSegundaFirstPrize, TradicionalSegundaSecondPrize, TradicionalSegundaThirdPrize);
@@ -277,7 +293,7 @@ namespace Quini6CLI.Core
                     foreach (Player TPFPWinner in TPW.TradicionalPrimeraFirstPrizeWinners)
                     {
                         string SelectedNumbers = string.Empty;
-                        foreach (int Number in TPFPWinner.SelectedNumbers)
+                        foreach (int Number in TPFPWinner.Quini6Ticket.SelectedNumbers)
                         {
                             SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
                         }
@@ -290,7 +306,7 @@ namespace Quini6CLI.Core
                     foreach (Player TPSPWinner in TPW.TradicionalPrimeraSecondPrizeWinners)
                     {
                         string SelectedNumbers = string.Empty;
-                        foreach (int Number in TPSPWinner.SelectedNumbers)
+                        foreach (int Number in TPSPWinner.Quini6Ticket.SelectedNumbers)
                         {
                             SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
                         }
@@ -303,7 +319,7 @@ namespace Quini6CLI.Core
                     foreach (Player TPTPWinner in TPW.TradicionalPrimeraThirdPrizeWinners)
                     {
                         string SelectedNumbers = string.Empty;
-                        foreach (int Number in TPTPWinner.SelectedNumbers)
+                        foreach (int Number in TPTPWinner.Quini6Ticket.SelectedNumbers)
                         {
                             SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
                         }
@@ -316,7 +332,7 @@ namespace Quini6CLI.Core
                     foreach (Player TSFPWinner in TSW.TradicionalSegundaFirstPrizeWinners)
                     {
                         string SelectedNumbers = string.Empty;
-                        foreach (int Number in TSFPWinner.SelectedNumbers)
+                        foreach (int Number in TSFPWinner.Quini6Ticket.SelectedNumbers)
                         {
                             SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
                         }
@@ -329,7 +345,7 @@ namespace Quini6CLI.Core
                     foreach (Player TSSPWinner in TSW.TradicionalSegundaSecondPrizeWinners)
                     {
                         string SelectedNumbers = string.Empty;
-                        foreach (int Number in TSSPWinner.SelectedNumbers)
+                        foreach (int Number in TSSPWinner.Quini6Ticket.SelectedNumbers)
                         {
                             SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
                         }
@@ -342,7 +358,7 @@ namespace Quini6CLI.Core
                     foreach (Player TSTPWinner in TSW.TradicionalSegundaThirdPrizeWinners)
                     {
                         string SelectedNumbers = string.Empty;
-                        foreach (int Number in TSTPWinner.SelectedNumbers)
+                        foreach (int Number in TSTPWinner.Quini6Ticket.SelectedNumbers)
                         {
                             SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
                         }
@@ -355,7 +371,7 @@ namespace Quini6CLI.Core
                     foreach (Player RPWinner in RW.RevanchaPrizeWinners)
                     {
                         string SelectedNumbers = string.Empty;
-                        foreach (int Number in RPWinner.SelectedNumbers)
+                        foreach (int Number in RPWinner.Quini6Ticket.SelectedNumbers)
                         {
                             SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
                         }
@@ -368,7 +384,7 @@ namespace Quini6CLI.Core
                     foreach (Player SSPWinner in SSW.SiempreSalePrizeWinners)
                     {
                         string SelectedNumbers = string.Empty;
-                        foreach (int Number in SSPWinner.SelectedNumbers)
+                        foreach (int Number in SSPWinner.Quini6Ticket.SelectedNumbers)
                         {
                             SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
                         }
@@ -381,7 +397,7 @@ namespace Quini6CLI.Core
                     foreach (Player PEPWinner in PEW.PozoExtraPrizeWinners)
                     {
                         string SelectedNumbers = string.Empty;
-                        foreach (int Number in PEPWinner.SelectedNumbers)
+                        foreach (int Number in PEPWinner.Quini6Ticket.SelectedNumbers)
                         {
                             SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
                         }

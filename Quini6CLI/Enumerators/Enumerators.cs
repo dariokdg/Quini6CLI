@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Quini6CLI.Enumerators
+﻿namespace Quini6CLI.Enumerators
 {
     static class Enumerators
     {
@@ -62,6 +58,13 @@ namespace Quini6CLI.Enumerators
         {
             Prize,
             NoPrize
+        }
+
+        public enum GameParticipation
+        {
+            TradicionalOnly,
+            TradicionalAndRevancha,
+            TradicionalAndRevanchaAndSiempreSale
         }
     }
 }

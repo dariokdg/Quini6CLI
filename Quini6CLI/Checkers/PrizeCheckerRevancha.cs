@@ -29,7 +29,7 @@ namespace Quini6CLI.Checkers
             {
                 ResultChecker RC = new ResultChecker();
                 PrizeProvider PP = new PrizeProvider();
-                if (PP.CheckMatchesRevancha(RC.GetMatchingNumbers(RPlayer.SelectedNumbers, Results.DrawingResults)) == PrizeTypeRevancha.Prize)
+                if (PP.CheckMatchesRevancha(RC.GetMatchingNumbers(RPlayer.Quini6Ticket.SelectedNumbers, Results.DrawingResults)) == PrizeTypeRevancha.Prize)
                 {
                     //Winner winner chicken dinner
                     RevanchaPrizeWinners.Add(RPlayer);

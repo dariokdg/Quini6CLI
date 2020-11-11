@@ -69,9 +69,9 @@ namespace Quini6CLI
             Console.WriteLine("-------------------------------------------------------------");
             Console.WriteLine("NUMBER OF PLAYERS: OPTIONAL PARAMETER");
             Console.WriteLine("    DETERMINE HOW MANY RANDOM-GENERATED PLAYERS THERE WILL BE IN THE QUINI 6 GAME BEING EXECUTED");
-            Console.WriteLine("    IF THIS IS NOT PROVIDED THERE WILL ONLY BE ONE PLAYER");
+            Console.WriteLine("    IF THIS IS NOT PROVIDED THERE WILL ONLY BE ONE PLAYER ");
             Console.WriteLine("ITERATE UNTIL JACKPOT: OPTIONAL PARAMETER");
-            Console.WriteLine("    DETERMINE HOW MANY RANDOM-GENERATED PLAYERS THERE WILL BE IN THE QUINI 6 GAME BEING EXECUTED");
+            Console.WriteLine("    DETERMINE IF THE GAME SHOULD BE EXECUTED REPEATEDLY UNTIL THERE IS A JACKPOT (A.K.A. FIRST PRIZE) WINNER");
             Console.WriteLine("    IF THIS IS NOT PROVIDED THE GAME WILL ONLY RUN ONCE");
             Console.WriteLine("-------------------------------------------------------------");
             Console.WriteLine(">> EXAMPLES:");

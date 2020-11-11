@@ -41,7 +41,7 @@ namespace Quini6CLI.Checkers
             {
                 ResultChecker RC = new ResultChecker();
                 PrizeProvider PP = new PrizeProvider();
-                if (PP.CheckMatchesTradicionalPrimera(RC.GetMatchingNumbers(TPPlayer.SelectedNumbers, Results.DrawingResults)) == PrizeTypeTradicionalPrimera.FirstPrize)
+                if (PP.CheckMatchesTradicionalPrimera(RC.GetMatchingNumbers(TPPlayer.Quini6Ticket.SelectedNumbers, Results.DrawingResults)) == PrizeTypeTradicionalPrimera.FirstPrize)
                 {
                     //Winner winner chicken dinner
                     TradicionalPrimeraFirstPrizeWinners.Add(TPPlayer);
@@ -57,7 +57,7 @@ namespace Quini6CLI.Checkers
             {
                 ResultChecker RC = new ResultChecker();
                 PrizeProvider PP = new PrizeProvider();
-                if (PP.CheckMatchesTradicionalPrimera(RC.GetMatchingNumbers(TPPlayer.SelectedNumbers, Results.DrawingResults)) == PrizeTypeTradicionalPrimera.SecondPrize)
+                if (PP.CheckMatchesTradicionalPrimera(RC.GetMatchingNumbers(TPPlayer.Quini6Ticket.SelectedNumbers, Results.DrawingResults)) == PrizeTypeTradicionalPrimera.SecondPrize)
                 {
                     //Winner winner chicken dinner
                     TradicionalPrimeraSecondPrizeWinners.Add(TPPlayer);
@@ -73,7 +73,7 @@ namespace Quini6CLI.Checkers
             {
                 ResultChecker RC = new ResultChecker();
                 PrizeProvider PP = new PrizeProvider();
-                if (PP.CheckMatchesTradicionalPrimera(RC.GetMatchingNumbers(TPPlayer.SelectedNumbers, Results.DrawingResults)) == PrizeTypeTradicionalPrimera.ThirdPrize)
+                if (PP.CheckMatchesTradicionalPrimera(RC.GetMatchingNumbers(TPPlayer.Quini6Ticket.SelectedNumbers, Results.DrawingResults)) == PrizeTypeTradicionalPrimera.ThirdPrize)
                 {
                     //Winner winner chicken dinner
                     TradicionalPrimeraThirdPrizeWinners.Add(TPPlayer);

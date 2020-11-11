@@ -1,38 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Quini6CLI.Core
 {
     class Player
     {
-        public enum GameParticipation
-        {
-            TradicionalOnly,
-            TradicionalAndRevancha,
-            TradicionalAndSiempreSale,
-            TradicionalAndRevanchaAndSiempreSale
-        }
-
         public string Name { get; set; }
         public int Age { get; set; }
         public string City { get; set; }
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
-        public List<int> SelectedNumbers { get; set; }
-        public decimal PrizeMoney { get; set; }
-        public GameParticipation Games { get; set; }
+        public Ticket Quini6Ticket { get; set; }
+        private decimal PrizeMoney = 0;
+        private decimal MoneySpent = 0;
 
-        public Player(string Name, int Age, string City, string Address, string PhoneNumber, List<int> SelectedNumbers, GameParticipation Games)
+        public Player(string Name, int Age, string City, string Address, string PhoneNumber, Ticket Quini6Ticket)
         {
             this.Name = Name;
             this.Age = CheckAge(Age);
             this.City = City;
             this.Address = Address;
             this.PhoneNumber = CheckPhoneNumber(PhoneNumber);
-            this.SelectedNumbers = CheckSelectedNumbers(SelectedNumbers);
-            this.PrizeMoney = 0;
-            this.Games = Games;
+            this.Quini6Ticket = Quini6Ticket;
+            MoneySpent = Quini6Ticket.Cost;
         }
 
         private int CheckAge(int Age)
@@ -59,36 +49,14 @@ namespace Quini6CLI.Core
             }
         }
 
-        private List<int> CheckSelectedNumbers(List<int> SelectedNumbers)
-        {
-            List<int> ProcessedNumbers = new List<int>();
-            foreach (int SelectedNumber in SelectedNumbers)
-            {
-                if (!ProcessedNumbers.Contains(SelectedNumber))
-                {
-                    if (SelectedNumber >= 0 && SelectedNumber <= 45)
-                    {
-                        ProcessedNumbers.Add(SelectedNumber);
-                    }
-                    else
-                    {
-                        throw new ArgumentOutOfRangeException("There are numbers out of range within the provided list.\nTo play 'Quini 6' you need to select 6 different numbers, from 00 to 45.");
-                    }
-                }
-            }
-            if (ProcessedNumbers.Count == 6)
-            {
-                return ProcessedNumbers;
-            }
-            else
-            {
-                throw new ArgumentException("There are repeated numbers within the provided list.\nTo play 'Quini 6' you need to select 6 different numbers, from 00 to 45.");
-            }
-        }
-
         public decimal CheckWinnings()
         {
-            return this.PrizeMoney;
+            return PrizeMoney;
+        }
+
+        public decimal CheckSpends()
+        {
+            return MoneySpent;
         }
     }
 }

@@ -47,7 +47,7 @@ namespace Quini6CLI.Checkers
             {
                 ResultChecker RC = new ResultChecker();
                 PrizeProvider PP = new PrizeProvider();
-                if (PP.CheckMatchesPozoExtra(RC.GetMatchingNumbers(PEPlayer.SelectedNumbers, Results.DrawingResults)) == PrizeTypePozoExtra.Prize)
+                if (PP.CheckMatchesPozoExtra(RC.GetMatchingNumbers(PEPlayer.Quini6Ticket.SelectedNumbers, Results.DrawingResults)) == PrizeTypePozoExtra.Prize)
                 {
                     //Winner winner chicken dinner
                     PozoExtraPrizeWinners.Add(PEPlayer);
