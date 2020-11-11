@@ -11,9 +11,9 @@ namespace Quini6CLI.Core
 {
     class Quini6Game
     {
-        private static readonly decimal TotalTradicionalSales = 100000000;
-        private static readonly decimal TotalRevanchaSales = 50000000;
-        private static readonly decimal TotalSiempreSaleSales = 40000000;
+        private static readonly decimal TotalTradicionalSales = 2000000000;
+        private static readonly decimal TotalRevanchaSales = 800000000;
+        private static readonly decimal TotalSiempreSaleSales = 100000000;
         private static readonly decimal TradicionalPrimeraFirstPrize = TotalTradicionalSales * 0.5m * 0.4m * 0.7m;
         private static readonly decimal TradicionalPrimeraSecondPrize = TotalTradicionalSales * 0.5m * 0.4m * 0.1m;
         private static readonly decimal TradicionalPrimeraThirdPrize = TotalTradicionalSales * 0.5m * 0.4m * 0.03m;
@@ -36,16 +36,22 @@ namespace Quini6CLI.Core
             this.Players = Players;
         }
 
-        public void ExecuteQuini6Game()
+        public Quini6Winners ExecuteQuini6Game()
         {
             Console.WriteLine("----------------------");
-            Console.WriteLine("QUINI 6: " + DateTime.Now.ToString());
+            Console.WriteLine($"QUINI 6 GAME STARTED: {DateTime.Now}");
+            Console.WriteLine("----------------------");
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("----------------------");
+            Console.WriteLine($"NUMBER OF PLAYERS: {Players.Count}");
             Console.WriteLine("----------------------");
             PrintPrizes();
             List<GameTypeResult> Drawings = ExecuteDrawings();
             PrintDrawingResults(Drawings);
             Quini6Winners Q6W = CalculateWinners(Drawings);
             PrintWinners(Q6W);
+            return Q6W;
         }
 
         private List<GameTypeResult> ExecuteDrawings()

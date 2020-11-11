@@ -15,20 +15,18 @@ namespace Quini6CLI.Core
         }
 
         public string Name { get; set; }
-        private int Age { get; set; }
-        private string Province { get; set; }
-        private string City { get; set; }
-        private string Address { get; set; }
-        private string PhoneNumber { get; set; }
+        public int Age { get; set; }
+        public string City { get; set; }
+        public string Address { get; set; }
+        public string PhoneNumber { get; set; }
         public List<int> SelectedNumbers { get; set; }
         public decimal PrizeMoney { get; set; }
         public GameParticipation Games { get; set; }
 
-        public Player(string Name, int Age, string Province, string City, string Address, string PhoneNumber, List<int> SelectedNumbers, GameParticipation Games)
+        public Player(string Name, int Age, string City, string Address, string PhoneNumber, List<int> SelectedNumbers, GameParticipation Games)
         {
             this.Name = Name;
             this.Age = CheckAge(Age);
-            this.Province = Province;
             this.City = City;
             this.Address = Address;
             this.PhoneNumber = CheckPhoneNumber(PhoneNumber);

@@ -1,15 +1,13 @@
 ﻿using Quini6CLI.Interfaces;
-using System;
-using System.Security.Cryptography;
 
-namespace Quini6CLI.Providers
+namespace Quini6CLI.Generators
 {
-    class RandomNumberProvider : IRandomNumber
+    class RandomNumberGenerator : IRandomNumber
     {
         private int InclusiveLowerBound { get; set; }
         private int ExclusiveUpperBound { get; set; }
 
-        public RandomNumberProvider()
+        public RandomNumberGenerator()
         {
             InclusiveLowerBound = 0;
             ExclusiveUpperBound = 46;
@@ -17,7 +15,7 @@ namespace Quini6CLI.Providers
 
         public int GetRandomQuini6Number()
         {
-            return RandomNumberGenerator.GetInt32(InclusiveLowerBound, ExclusiveUpperBound);
+            return System.Security.Cryptography.RandomNumberGenerator.GetInt32(InclusiveLowerBound, ExclusiveUpperBound);
         }
     }
 }

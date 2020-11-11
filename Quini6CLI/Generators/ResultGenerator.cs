@@ -22,7 +22,7 @@ namespace Quini6CLI.Generators
 
         public List<int> GenerateDrawingResults()
         {
-            RandomNumberProvider RNP = new RandomNumberProvider();
+            RandomNumberGenerator RNP = new RandomNumberGenerator();
             FirstNumber = GetFirstNumber(RNP);
             SecondNumber = GetSecondNumber(RNP);
             ThirdNumber = GetThirdNumber(RNP);
