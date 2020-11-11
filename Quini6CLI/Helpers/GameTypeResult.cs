@@ -1,9 +1,7 @@
-﻿using Quini6CLI.Enumerators;
-using System;
+﻿using Quini6CLI.Core;
 using System.Collections.Generic;
-using System.Text;
 
-namespace Quini6CLI.Core
+namespace Quini6CLI.Helpers
 {
     class GameTypeResult
     {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Quini6CLI.Helpers;
+using System;
 using System.Linq;
 
 namespace Quini6CLI.Core
@@ -54,9 +55,9 @@ namespace Quini6CLI.Core
             return PrizeMoney;
         }
 
-        public decimal CheckSpends()
+        public GameSpends CheckSpends()
         {
-            return MoneySpent;
+            return new GameSpends(MoneySpent, Quini6Ticket.Games);
         }
     }
 }

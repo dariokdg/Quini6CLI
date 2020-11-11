@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using static Quini6CLI.Enumerators.Enumerators;
 
 namespace Quini6CLI.Core
@@ -51,7 +50,7 @@ namespace Quini6CLI.Core
             return Games switch
             {
                 GameParticipation.TradicionalOnly => 50m,
-                GameParticipation.TradicionalAndRevancha => 57m,
+                GameParticipation.TradicionalAndRevancha => 60m,
                 GameParticipation.TradicionalAndRevanchaAndSiempreSale => 80m,
                 _ => 50m,
             };

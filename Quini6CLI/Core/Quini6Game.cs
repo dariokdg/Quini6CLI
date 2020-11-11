@@ -7,23 +7,24 @@ using ConsoleTables;
 using Quini6CLI.Checkers;
 using Quini6CLI.Winners;
 using static Quini6CLI.Enumerators.Enumerators;
+using Quini6CLI.Helpers;
 
 namespace Quini6CLI.Core
 {
     class Quini6Game
     {
-        private static readonly decimal TotalTradicionalSales = 2000000000;
-        private static readonly decimal TotalRevanchaSales = 800000000;
-        private static readonly decimal TotalSiempreSaleSales = 100000000;
-        private static readonly decimal TradicionalPrimeraFirstPrize = TotalTradicionalSales * 0.5m * 0.4m * 0.7m;
-        private static readonly decimal TradicionalPrimeraSecondPrize = TotalTradicionalSales * 0.5m * 0.4m * 0.1m;
-        private static readonly decimal TradicionalPrimeraThirdPrize = TotalTradicionalSales * 0.5m * 0.4m * 0.03m;
-        private static readonly decimal TradicionalSegundaFirstPrize = TotalTradicionalSales * 0.5m * 0.4m * 0.7m;
-        private static readonly decimal TradicionalSegundaSecondPrize = TotalTradicionalSales * 0.5m * 0.4m * 0.1m;
-        private static readonly decimal TradicionalSegundaThirdPrize = TotalTradicionalSales * 0.5m * 0.4m * 0.03m;
-        private static readonly decimal RevanchaPrize = TotalRevanchaSales * 0.9m * 0.6m * 0.8m;
-        private static readonly decimal SiempreSalePrize = TotalSiempreSaleSales * 0.9m * 0.6m * 0.6m;
-        private static readonly decimal PozoExtraPrize = (TotalTradicionalSales * 0.5m * 0.163m) + (TotalTradicionalSales * 0.5m * 0.163m) + (TotalRevanchaSales * 0.9m * 0.6m * 0.192m) + (TotalSiempreSaleSales * 0.9m * 0.6m * 0.4m);
+        private static decimal TotalTradicionalSales = 0;
+        private static decimal TotalRevanchaSales = 0;
+        private static decimal TotalSiempreSaleSales = 0;
+        private static decimal TradicionalPrimeraFirstPrize = 0;
+        private static decimal TradicionalPrimeraSecondPrize = 0;
+        private static decimal TradicionalPrimeraThirdPrize = 0;
+        private static decimal TradicionalSegundaFirstPrize = 0;
+        private static decimal TradicionalSegundaSecondPrize = 0;
+        private static decimal TradicionalSegundaThirdPrize = 0;
+        private static decimal RevanchaPrize = 0;
+        private static decimal SiempreSalePrize = 0;
+        private static decimal PozoExtraPrize = 0;
 
         private List<Player> Players { get; set; }
         public List<int> TradicionalPrimeraNumbers { get; set; }
@@ -52,6 +53,7 @@ namespace Quini6CLI.Core
             Console.WriteLine("----------------------");
             Console.WriteLine($"TOTAL SELLS: {CalculateTotalSells().ToString("c2")}");
             Console.WriteLine("----------------------");
+            CalculatePrizes();
             PrintPrizes();
             List<GameTypeResult> Drawings = ExecuteDrawings();
             PrintDrawingResults(Drawings);
@@ -65,9 +67,26 @@ namespace Quini6CLI.Core
             decimal TotalSells = 0;
             foreach (Player Quini6Player in Players)
             {
-                TotalSells += Quini6Player.CheckSpends();
+                GameSpends GS = Quini6Player.CheckSpends();
+                TotalTradicionalSales += GS.TradicionalSpends;
+                TotalRevanchaSales += GS.RevanchaSpends;
+                TotalSiempreSaleSales += GS.SiempreSaleSpends;
+                TotalSells += (GS.TradicionalSpends + GS.RevanchaSpends + GS.SiempreSaleSpends);
             }
             return TotalSells;
+        }
+
+        private void CalculatePrizes()
+        { 
+            TradicionalPrimeraFirstPrize = TotalTradicionalSales * 0.5m * 0.4m * 0.7m;
+            TradicionalPrimeraSecondPrize = TotalTradicionalSales * 0.5m * 0.4m * 0.1m;
+            TradicionalPrimeraThirdPrize = TotalTradicionalSales * 0.5m * 0.4m * 0.03m;
+            TradicionalSegundaFirstPrize = TotalTradicionalSales * 0.5m * 0.4m * 0.7m;
+            TradicionalSegundaSecondPrize = TotalTradicionalSales * 0.5m * 0.4m * 0.1m;
+            TradicionalSegundaThirdPrize = TotalTradicionalSales * 0.5m * 0.4m * 0.03m;
+            RevanchaPrize = TotalRevanchaSales * 0.9m * 0.6m * 0.8m;
+            SiempreSalePrize = TotalSiempreSaleSales * 0.9m * 0.6m * 0.6m;
+            PozoExtraPrize = (TotalTradicionalSales * 0.5m * 0.163m) + (TotalTradicionalSales * 0.5m * 0.163m) + (TotalRevanchaSales * 0.9m * 0.6m * 0.192m) + (TotalSiempreSaleSales * 0.9m * 0.6m * 0.4m);
         }
 
         private List<GameTypeResult> ExecuteDrawings()
