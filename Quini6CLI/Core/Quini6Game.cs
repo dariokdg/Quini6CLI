@@ -52,12 +52,12 @@ namespace Quini6CLI.Core
 
         private void PrintProgramStartup()
         {
-            Console.WriteLine("----------------------");
+            Console.WriteLine("--------------------------------------------");
             Console.WriteLine($"QUINI 6 GAME STARTED: {DateTime.Now}");
-            Console.WriteLine("----------------------");
-            Console.WriteLine("\n\n----------------------");
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("\n\n\n--------------------------------------------");
             Console.WriteLine($"NUMBER OF PLAYERS: {Players.Count}");
-            Console.WriteLine("----------------------");
+            Console.WriteLine("--------------------------------------------");
         }
 
         private decimal CalculateTotalSells()
@@ -76,9 +76,9 @@ namespace Quini6CLI.Core
 
         private void PrintTotalSells(decimal TotalSells)
         {
-            Console.WriteLine("\n\n----------------------");
+            Console.WriteLine("\n\n\n--------------------------------------------");
             Console.WriteLine($"TOTAL SELLS: {TotalSells:c2}");
-            Console.WriteLine("----------------------");
+            Console.WriteLine("--------------------------------------------");
         }
 
         private PrizeGenerator GetPrizes()
@@ -186,9 +186,9 @@ namespace Quini6CLI.Core
 
         private void PrintPrizes(PrizeGenerator PG)
         {
-            Console.WriteLine("\n\n----------------------");
+            Console.WriteLine("\n\n\n--------------------------------------------");
             Console.WriteLine("QUINI 6 PRIZE LIST:");
-            Console.WriteLine("----------------------");
+            Console.WriteLine("--------------------------------------------");
             Console.WriteLine("");
 
             ConsoleTable Results = new ConsoleTable("GAME TYPE", "PRIZE CATEGORY", "NUMBER OF HITS", "TOTAL PRIZE");
@@ -212,9 +212,9 @@ namespace Quini6CLI.Core
             GameTypeResult GTRSS = DrawingResults[3];
             GameTypeResult GTRPE = DrawingResults[4];
 
-            Console.WriteLine("\n\n----------------------");
+            Console.WriteLine("\n\n--------------------------------------------");
             Console.WriteLine($"QUINI 6 DRAWINGS:");
-            Console.WriteLine("----------------------");
+            Console.WriteLine("--------------------------------------------");
             Console.WriteLine("");
             ConsoleTable Results = new ConsoleTable("GAME TYPE", "FIRST NUMBER", "SECOND NUMBER", "THIRD NUMBER", "FOURTH NUMBER", "FIFTH NUMBER", "SIXTH NUMBER");
             Results.AddRow("TRADICIONAL PRIMERA", GTRTP.DrawingResults[0].ToString("D2"), GTRTP.DrawingResults[1].ToString("D2"), GTRTP.DrawingResults[2].ToString("D2"), GTRTP.DrawingResults[3].ToString("D2"), GTRTP.DrawingResults[4].ToString("D2"), GTRTP.DrawingResults[5].ToString("D2"));
@@ -268,9 +268,9 @@ namespace Quini6CLI.Core
             SiempreSaleWinners SSW = (SiempreSaleWinners)Q6W.SSW;
             PozoExtraWinners PEW = (PozoExtraWinners)Q6W.PEW;
 
-            Console.WriteLine("\n\n----------------------");
+            Console.WriteLine("\n\n--------------------------------------------");
             Console.WriteLine($"QUINI 6 RESULTS:");
-            Console.WriteLine("----------------------");
+            Console.WriteLine("--------------------------------------------");
             Console.WriteLine("");
 
             ConsoleTable Results = new ConsoleTable("GAME TYPE", "PRIZE CATEGORY", "TOTAL PRIZE AMOUNT", "NUMBER OF WINNERS", "NUMBER OF HITS", "PRIZE FOR EACH WINNER");
