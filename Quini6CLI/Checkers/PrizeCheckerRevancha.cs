@@ -10,43 +10,31 @@ namespace Quini6CLI.Checkers
 {
     class PrizeCheckerRevancha : IPrizeChecker
     {
-        private GameTypeResult Results;
-        private decimal RevanchaPrize { get; set; }
+        public GameTypeResult Results { get; set; }
+        public decimal Prize { get; set; }
 
-        public PrizeCheckerRevancha(
-            GameTypeResult Results,
-            decimal RevanchaPrize
-            )
+        public PrizeCheckerRevancha(GameTypeResult Results, decimal RevanchaPrize)
         {
             this.Results = Results;
-            this.RevanchaPrize = RevanchaPrize;
+            Prize = RevanchaPrize;
         }
 
-        public RevanchaWinners CheckPrizes()
+        public IWinner CheckPrizes()
         {
             List<Player> RevanchaPrizeWinners = new List<Player>();
-            List<Player> NoPrize = new List<Player>();
+            ResultChecker RC = new ResultChecker();
+            PrizeProvider PP = new PrizeProvider();
             foreach (Player RPlayer in Results.Players)
             {
-                ResultChecker RC = new ResultChecker();
-                PrizeProvider PP = new PrizeProvider();
-                if (PP.CheckMatchesRevancha(RC.GetMatchingNumbers(RPlayer.Quini6Ticket.SelectedNumbers, Results.DrawingResults)) == PrizeTypeRevancha.Prize)
+                int MatchingNumbers = RC.GetMatchingNumbers(RPlayer.Quini6Ticket.SelectedNumbers, Results.DrawingResults);
+                PrizeTypeRevancha PTR = PP.CheckMatchesRevancha(MatchingNumbers);
+                if (PTR == PrizeTypeRevancha.Prize)
                 {
                     //Winner winner chicken dinner
                     RevanchaPrizeWinners.Add(RPlayer);
                 }
-                else
-                {
-                    NoPrize.Add(RPlayer);
-                }
             }
-
-            RevanchaWinners RW = new RevanchaWinners(
-                RevanchaPrize,
-                RevanchaPrizeWinners
-                );
-
-            return RW;
+            return new RevanchaWinners(Prize, RevanchaPrizeWinners);
         }
     }
 }

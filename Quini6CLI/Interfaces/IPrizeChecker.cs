@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Quini6CLI.Helpers;
 
 namespace Quini6CLI.Interfaces
 {
     interface IPrizeChecker
     {
-        public void CheckPrizes()
-        {
-
-        }
+        public GameTypeResult Results { get; set; }
+        public decimal Prize { get; set; }
+        public IWinner CheckPrizes();
     }
 }

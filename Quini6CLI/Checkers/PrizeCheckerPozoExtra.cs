@@ -10,30 +10,34 @@ namespace Quini6CLI.Checkers
 {
     class PrizeCheckerPozoExtra : IPrizeChecker
     {
-        private GameTypeResult Results;
-        private decimal PozoExtraPrize { get; set; }
+        public GameTypeResult Results { get; set; }
+        public decimal Prize { get; set; }
+        private IWinner TPFPW { get; set; }
+        private IWinner TSFPW { get; set; }
+        private IWinner RW { get; set; }
 
-        public PrizeCheckerPozoExtra(
-            GameTypeResult Results,
-            decimal PozoExtraPrize
-            )
+        public PrizeCheckerPozoExtra(GameTypeResult Results, decimal PozoExtraPrize, IWinner TPFPW, IWinner TSFPW, IWinner RW)
         {
             this.Results = Results;
-            this.PozoExtraPrize = PozoExtraPrize;
+            Prize = PozoExtraPrize;
+            this.TPFPW = TPFPW;
+            this.TSFPW = TSFPW;
+            this.RW = RW;
         }
 
-        public PozoExtraWinners CheckPrizes(TradicionalPrimeraWinners TPW, TradicionalSegundaWinners TSW, RevanchaWinners RW)
+        public IWinner CheckPrizes()
         {
             List<Player> PozoExtraPlayers = new List<Player>();
             List<Player> PozoExtraPrizeWinners = new List<Player>();
-            List<Player> NoPrize = new List<Player>();
+            ResultChecker RC = new ResultChecker();
+            PrizeProvider PP = new PrizeProvider();
 
             //Pozo extra: to participate here the player must not have any 6 hits in any of the other drawings (excluding 'Siempre Sale')
             foreach (Player PotentialPozoExtraPlayer in Results.Players)
             {
-                if (TPW.TradicionalPrimeraFirstPrizeWinners.Contains(PotentialPozoExtraPlayer) 
-                    || TSW.TradicionalSegundaFirstPrizeWinners.Contains(PotentialPozoExtraPlayer) 
-                    || RW.RevanchaPrizeWinners.Contains(PotentialPozoExtraPlayer)
+                if (TPFPW.PrizeWinnerList.Contains(PotentialPozoExtraPlayer) 
+                    || TSFPW.PrizeWinnerList.Contains(PotentialPozoExtraPlayer) 
+                    || RW.PrizeWinnerList.Contains(PotentialPozoExtraPlayer)
                     )
                 {
                     continue;
@@ -46,25 +50,16 @@ namespace Quini6CLI.Checkers
 
             foreach (Player PEPlayer in PozoExtraPlayers)
             {
-                ResultChecker RC = new ResultChecker();
-                PrizeProvider PP = new PrizeProvider();
-                if (PP.CheckMatchesPozoExtra(RC.GetMatchingNumbers(PEPlayer.Quini6Ticket.SelectedNumbers, Results.DrawingResults)) == PrizeTypePozoExtra.Prize)
+                int MatchingNumbers = RC.GetMatchingNumbers(PEPlayer.Quini6Ticket.SelectedNumbers, Results.DrawingResults);
+                PrizeTypePozoExtra PTPE = PP.CheckMatchesPozoExtra(MatchingNumbers);
+                if (PTPE == PrizeTypePozoExtra.Prize)
                 {
                     //Winner winner chicken dinner
                     PozoExtraPrizeWinners.Add(PEPlayer);
                 }
-                else
-                {
-                    NoPrize.Add(PEPlayer);
-                }
             }
 
-            PozoExtraWinners PE = new PozoExtraWinners(
-                PozoExtraPrize,
-                PozoExtraPrizeWinners
-                );
-
-            return PE;
+            return new PozoExtraWinners(Prize,PozoExtraPrizeWinners);
         }
     }
 }

@@ -11,19 +11,16 @@ namespace Quini6CLI.Checkers
 {
     class PrizeCheckerSiempreSale : IPrizeChecker
     {
-        private GameTypeResult Results;
-        private decimal SiempreSalePrize { get; set; }
+        public GameTypeResult Results { get; set; }
+        public decimal Prize { get; set; }
 
-        public PrizeCheckerSiempreSale(
-            GameTypeResult Results,
-            decimal SiempreSalePrize
-            )
+        public PrizeCheckerSiempreSale(GameTypeResult Results, decimal SiempreSalePrize)
         {
             this.Results = Results;
-            this.SiempreSalePrize = SiempreSalePrize;
+            Prize = SiempreSalePrize;
         }
 
-        public SiempreSaleWinners CheckPrizes()
+        public IWinner CheckPrizes()
         {
             List<Player> SiempreSalePrizeWinners = new List<Player>();
             List<Player> SiempreSalePotentialWinnersSixMatches = new List<Player>();
@@ -127,15 +124,7 @@ namespace Quini6CLI.Checkers
                 }
             }
 
-            SiempreSaleWinners SSW = new SiempreSaleWinners(
-                SiempreSalePrize,
-                SiempreSalePrizeWinners,
-                NumberOfMatchesWinners
-                );
-
-            return SSW;
-
-
+            return new SiempreSaleWinners(Prize, SiempreSalePrizeWinners, NumberOfMatchesWinners);
         }
     }
 }

@@ -47,11 +47,11 @@ namespace Quini6CLI
             Stopwatch SW = new Stopwatch();
             SW.Start();
             int Counter = 0;
-            while (Q6W.TPW.TradicionalPrimeraFirstPrizeWinners.Count == 0 && Q6W.TSW.TradicionalSegundaFirstPrizeWinners.Count == 0 && Q6W.RW.RevanchaPrizeWinners.Count == 0)
+            while (Q6W.TPFPW.PrizeWinnerList.Count == 0 && Q6W.TSFPW.PrizeWinnerList.Count == 0 && Q6W.RW.PrizeWinnerList.Count == 0)
             {
                 Counter++;
                 Q6W = Q6G.ExecuteQuini6Game();
-                if (Q6W.TPW.TradicionalPrimeraFirstPrizeWinners.Count == 0 && Q6W.TSW.TradicionalSegundaFirstPrizeWinners.Count == 0 && Q6W.RW.RevanchaPrizeWinners.Count == 0)
+                if (Q6W.TPFPW.PrizeWinnerList.Count == 0 && Q6W.TSFPW.PrizeWinnerList.Count == 0 && Q6W.RW.PrizeWinnerList.Count == 0)
                 {
                     Console.Clear();
                 }

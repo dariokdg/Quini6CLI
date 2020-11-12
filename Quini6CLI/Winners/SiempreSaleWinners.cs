@@ -1,30 +1,29 @@
 ﻿using Quini6CLI.Core;
+using Quini6CLI.Interfaces;
 using System.Collections.Generic;
 
 namespace Quini6CLI.Winners
 {
-    class SiempreSaleWinners
+    class SiempreSaleWinners : IWinner
     {
-        private decimal SiempreSalePrizeTotalAmount { get; set; }
-        public List<Player> SiempreSalePrizeWinners { get; set; }
         public int SiempreSaleWinnersNumberofMatches { get; set; }
-        public decimal SiempreSalePrizeAmountPerWinner { get; set; }
+        public List<Player> PrizeWinnerList { get; set; }
+        public decimal PrizeAmountPerWinner { get; set; }
         public SiempreSaleWinners(
             decimal SiempreSalePrizeTotalAmount,
             List<Player> SiempreSalePrizeWinners,
             int SiempreSaleWinnersNumberofMatches
             )
         {
-            this.SiempreSalePrizeTotalAmount = SiempreSalePrizeTotalAmount;
-            this.SiempreSalePrizeWinners = SiempreSalePrizeWinners;
+            PrizeWinnerList = SiempreSalePrizeWinners;
             this.SiempreSaleWinnersNumberofMatches = SiempreSaleWinnersNumberofMatches;
             if (SiempreSalePrizeWinners.Count > 0)
             {
-                this.SiempreSalePrizeAmountPerWinner = SiempreSalePrizeTotalAmount / SiempreSalePrizeWinners.Count;
+                PrizeAmountPerWinner = SiempreSalePrizeTotalAmount / SiempreSalePrizeWinners.Count;
             }
             else
             {
-                this.SiempreSalePrizeAmountPerWinner = 0;
+                PrizeAmountPerWinner = 0;
             }
         }
     }

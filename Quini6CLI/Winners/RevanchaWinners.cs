@@ -1,27 +1,26 @@
 ﻿using Quini6CLI.Core;
+using Quini6CLI.Interfaces;
 using System.Collections.Generic;
 
 namespace Quini6CLI.Winners
 {
-    class RevanchaWinners
+    class RevanchaWinners : IWinner
     {
-        private decimal RevanchaPrizeTotalAmount { get; set; }
-        public List<Player> RevanchaPrizeWinners { get; set; }
-        public decimal RevanchaPrizeAmountPerWinner { get; set; }
+        public List<Player> PrizeWinnerList { get; set; }
+        public decimal PrizeAmountPerWinner { get; set; }
         public RevanchaWinners(
             decimal RevanchaPrizeTotalAmount,
-            List<Player> RevanchaPrizeWinners
+            List<Player> RevanchaPrizeWinnerList
             )
         {
-            this.RevanchaPrizeTotalAmount = RevanchaPrizeTotalAmount;
-            this.RevanchaPrizeWinners = RevanchaPrizeWinners;
-            if (RevanchaPrizeWinners.Count > 0)
+            PrizeWinnerList = RevanchaPrizeWinnerList;
+            if (RevanchaPrizeWinnerList.Count > 0)
             {
-                this.RevanchaPrizeAmountPerWinner = RevanchaPrizeTotalAmount / RevanchaPrizeWinners.Count;
+                PrizeAmountPerWinner = RevanchaPrizeTotalAmount / RevanchaPrizeWinnerList.Count;
             }
             else
             {
-                this.RevanchaPrizeAmountPerWinner = 0;
+                PrizeAmountPerWinner = 0;
             }
         }
     }

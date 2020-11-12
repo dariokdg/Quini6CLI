@@ -1,27 +1,26 @@
 ﻿using Quini6CLI.Core;
+using Quini6CLI.Interfaces;
 using System.Collections.Generic;
 
 namespace Quini6CLI.Winners
 {
-    class PozoExtraWinners
+    class PozoExtraWinners : IWinner
     {
-        private decimal PozoExtraPrizeTotalAmount { get; set; }
-        public List<Player> PozoExtraPrizeWinners { get; set; }
-        public decimal PozoExtraPrizeAmountPerWinner { get; set; }
+        public List<Player> PrizeWinnerList { get; set; }
+        public decimal PrizeAmountPerWinner { get; set; }
         public PozoExtraWinners(
             decimal PozoExtraPrizeTotalAmount,
             List<Player> PozoExtraPrizeWinners
             )
         {
-            this.PozoExtraPrizeTotalAmount = PozoExtraPrizeTotalAmount;
-            this.PozoExtraPrizeWinners = PozoExtraPrizeWinners;
+            PrizeWinnerList = PozoExtraPrizeWinners;
             if (PozoExtraPrizeWinners.Count > 0)
             {
-                this.PozoExtraPrizeAmountPerWinner = PozoExtraPrizeTotalAmount / PozoExtraPrizeWinners.Count;
+                PrizeAmountPerWinner = PozoExtraPrizeTotalAmount / PozoExtraPrizeWinners.Count;
             }
             else
             {
-                this.PozoExtraPrizeAmountPerWinner = 0;
+                PrizeAmountPerWinner = 0;
             }
         }
     }
