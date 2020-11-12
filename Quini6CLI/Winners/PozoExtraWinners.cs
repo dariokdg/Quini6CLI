@@ -8,10 +8,7 @@ namespace Quini6CLI.Winners
     {
         public List<Player> PrizeWinnerList { get; set; }
         public decimal PrizeAmountPerWinner { get; set; }
-        public PozoExtraWinners(
-            decimal PozoExtraPrizeTotalAmount,
-            List<Player> PozoExtraPrizeWinners
-            )
+        public PozoExtraWinners(decimal PozoExtraPrizeTotalAmount, List<Player> PozoExtraPrizeWinners)
         {
             PrizeWinnerList = PozoExtraPrizeWinners;
             if (PozoExtraPrizeWinners.Count > 0)

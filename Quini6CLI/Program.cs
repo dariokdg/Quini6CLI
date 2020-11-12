@@ -27,6 +27,8 @@ namespace Quini6CLI
                     else
                     {
                         Q6G.ExecuteQuini6Game();
+                        Console.WriteLine("\n\n\nPROGRAM FINISHED - PRESS ANY KEY TO EXIT");
+                        Console.ReadKey();
                     }
                 }
                 else
@@ -39,6 +41,8 @@ namespace Quini6CLI
                 List<Player> Players = new RandomPlayerGenerator().GenerateListOfRandomPlayers(1);
                 Quini6Game Q6G = new Quini6Game(Players);
                 Q6G.ExecuteQuini6Game();
+                Console.WriteLine("\n\n\nPROGRAM FINISHED - PRESS ANY KEY TO EXIT");
+                Console.ReadKey();
             }
         }
 

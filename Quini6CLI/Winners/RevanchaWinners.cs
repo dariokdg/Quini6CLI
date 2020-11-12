@@ -8,10 +8,7 @@ namespace Quini6CLI.Winners
     {
         public List<Player> PrizeWinnerList { get; set; }
         public decimal PrizeAmountPerWinner { get; set; }
-        public RevanchaWinners(
-            decimal RevanchaPrizeTotalAmount,
-            List<Player> RevanchaPrizeWinnerList
-            )
+        public RevanchaWinners(decimal RevanchaPrizeTotalAmount, List<Player> RevanchaPrizeWinnerList)
         {
             PrizeWinnerList = RevanchaPrizeWinnerList;
             if (RevanchaPrizeWinnerList.Count > 0)

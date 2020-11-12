@@ -9,10 +9,7 @@ namespace Quini6CLI.Winners
         public List<Player> PrizeWinnerList { get; set; }
         public decimal PrizeAmountPerWinner { get; set; }
 
-        public TradicionalSegundaSecondPrizeWinners(
-            decimal TradicionalSegundaSecondPrizeTotalAmount,
-            List<Player> TradicionalSegundaSecondPrizeWinnerList
-            )
+        public TradicionalSegundaSecondPrizeWinners(decimal TradicionalSegundaSecondPrizeTotalAmount, List<Player> TradicionalSegundaSecondPrizeWinnerList)
         {
             PrizeWinnerList = TradicionalSegundaSecondPrizeWinnerList;
             if (TradicionalSegundaSecondPrizeWinnerList.Count > 0)

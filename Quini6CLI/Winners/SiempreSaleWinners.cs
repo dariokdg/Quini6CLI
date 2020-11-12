@@ -9,11 +9,7 @@ namespace Quini6CLI.Winners
         public int SiempreSaleWinnersNumberofMatches { get; set; }
         public List<Player> PrizeWinnerList { get; set; }
         public decimal PrizeAmountPerWinner { get; set; }
-        public SiempreSaleWinners(
-            decimal SiempreSalePrizeTotalAmount,
-            List<Player> SiempreSalePrizeWinners,
-            int SiempreSaleWinnersNumberofMatches
-            )
+        public SiempreSaleWinners(decimal SiempreSalePrizeTotalAmount, List<Player> SiempreSalePrizeWinners, int SiempreSaleWinnersNumberofMatches)
         {
             PrizeWinnerList = SiempreSalePrizeWinners;
             this.SiempreSaleWinnersNumberofMatches = SiempreSaleWinnersNumberofMatches;

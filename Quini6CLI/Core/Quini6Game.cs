@@ -55,9 +55,7 @@ namespace Quini6CLI.Core
             Console.WriteLine("----------------------");
             Console.WriteLine($"QUINI 6 GAME STARTED: {DateTime.Now}");
             Console.WriteLine("----------------------");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("----------------------");
+            Console.WriteLine("\n\n----------------------");
             Console.WriteLine($"NUMBER OF PLAYERS: {Players.Count}");
             Console.WriteLine("----------------------");
         }
@@ -78,9 +76,7 @@ namespace Quini6CLI.Core
 
         private void PrintTotalSells(decimal TotalSells)
         {
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("----------------------");
+            Console.WriteLine("\n\n----------------------");
             Console.WriteLine($"TOTAL SELLS: {TotalSells:c2}");
             Console.WriteLine("----------------------");
         }
@@ -190,9 +186,7 @@ namespace Quini6CLI.Core
 
         private void PrintPrizes(PrizeGenerator PG)
         {
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("----------------------");
+            Console.WriteLine("\n\n----------------------");
             Console.WriteLine("QUINI 6 PRIZE LIST:");
             Console.WriteLine("----------------------");
             Console.WriteLine("");
@@ -218,11 +212,7 @@ namespace Quini6CLI.Core
             GameTypeResult GTRSS = DrawingResults[3];
             GameTypeResult GTRPE = DrawingResults[4];
 
-
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("----------------------");
+            Console.WriteLine("\n\n----------------------");
             Console.WriteLine($"QUINI 6 DRAWINGS:");
             Console.WriteLine("----------------------");
             Console.WriteLine("");
@@ -278,10 +268,7 @@ namespace Quini6CLI.Core
             SiempreSaleWinners SSW = (SiempreSaleWinners)Q6W.SSW;
             PozoExtraWinners PEW = (PozoExtraWinners)Q6W.PEW;
 
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("----------------------");
+            Console.WriteLine("\n\n----------------------");
             Console.WriteLine($"QUINI 6 RESULTS:");
             Console.WriteLine("----------------------");
             Console.WriteLine("");
@@ -309,25 +296,19 @@ namespace Quini6CLI.Core
                 PEW.PrizeWinnerList.Count == 0
                 )
             {
-                Console.WriteLine("");
-                Console.WriteLine("");
-                Console.WriteLine("");
-                Console.WriteLine("----------------------");
+                Console.WriteLine("\n\n----------------------");
                 Console.WriteLine($"THERE WERE NO WINNERS");
                 Console.WriteLine("----------------------");
                 Console.WriteLine("");
             }
             else
             {
-                Console.WriteLine("");
-                Console.WriteLine("");
-                Console.WriteLine("");
-                Console.WriteLine("----------------------");
+                Console.WriteLine("\n\n----------------------");
                 Console.WriteLine($"QUINI 6 WINNERS:");
                 Console.WriteLine("----------------------");
                 Console.WriteLine("");
 
-                ConsoleTable Winners = new ConsoleTable("GAME TYPE", "PRIZE CATEGORY", "WINNER'S NAME", "WINNER'S SELECTED NUMBERS", "NUMBER OF HITS", "AMOUNT WON");
+                ConsoleTable Winners = new ConsoleTable("GAME TYPE", "PRIZE CATEGORY", "WINNER'S NAME", "WINNER'S AGE", "WINNER'S CITY", "WINNER'S ADDRESS", "WINNER'S PHONE NUMBER", "WINNER'S SELECTED NUMBERS", "NUMBER OF HITS", "AMOUNT WON");
                 if (TPFPW.PrizeWinnerList.Count > 0)
                 {
                     foreach (Player TPFPWinner in TPFPW.PrizeWinnerList)
@@ -338,7 +319,7 @@ namespace Quini6CLI.Core
                             SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
                         }
                         SelectedNumbers = SelectedNumbers.Substring(0, SelectedNumbers.Length - 3);
-                        Winners.AddRow("TRADICIONAL PRIMERA", "FIRST PRIZE", TPFPWinner.Name, SelectedNumbers, "6", TPFPW.PrizeAmountPerWinner.ToString("c2"));
+                        Winners.AddRow("TRADICIONAL PRIMERA", "FIRST PRIZE", TPFPWinner.Name, TPFPWinner.Age, TPFPWinner.City, TPFPWinner.Address, TPFPWinner.PhoneNumber, SelectedNumbers, "6", TPFPW.PrizeAmountPerWinner.ToString("c2"));
                     }
                 }
                 if (TPSPW.PrizeWinnerList.Count > 0)
@@ -351,7 +332,7 @@ namespace Quini6CLI.Core
                             SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
                         }
                         SelectedNumbers = SelectedNumbers.Substring(0, SelectedNumbers.Length - 3);
-                        Winners.AddRow("TRADICIONAL PRIMERA", "SECOND PRIZE", TPSPWinner.Name, SelectedNumbers, "5", TPSPW.PrizeAmountPerWinner.ToString("c2"));
+                        Winners.AddRow("TRADICIONAL PRIMERA", "SECOND PRIZE", TPSPWinner.Name, TPSPWinner.Age, TPSPWinner.City, TPSPWinner.Address, TPSPWinner.PhoneNumber, SelectedNumbers, "5", TPSPW.PrizeAmountPerWinner.ToString("c2"));
                     }
                 }
                 if (TPTPW.PrizeWinnerList.Count > 0)
@@ -364,7 +345,7 @@ namespace Quini6CLI.Core
                             SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
                         }
                         SelectedNumbers = SelectedNumbers.Substring(0, SelectedNumbers.Length - 3);
-                        Winners.AddRow("TRADICIONAL PRIMERA", "THIRD PRIZE", TPTPWinner.Name, SelectedNumbers, "4", TPTPW.PrizeAmountPerWinner.ToString("c2"));
+                        Winners.AddRow("TRADICIONAL PRIMERA", "THIRD PRIZE", TPTPWinner.Name, TPTPWinner.Age, TPTPWinner.City, TPTPWinner.Address, TPTPWinner.PhoneNumber, SelectedNumbers, "4", TPTPW.PrizeAmountPerWinner.ToString("c2"));
                     }
                 }
                 if (TSFPW.PrizeWinnerList.Count > 0)
@@ -377,7 +358,7 @@ namespace Quini6CLI.Core
                             SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
                         }
                         SelectedNumbers = SelectedNumbers.Substring(0, SelectedNumbers.Length - 3);
-                        Winners.AddRow("TRADICIONAL SEGUNDA", "FIRST PRIZE", TSFPWinner.Name, SelectedNumbers, "6", TSFPW.PrizeAmountPerWinner.ToString("c2"));
+                        Winners.AddRow("TRADICIONAL SEGUNDA", "FIRST PRIZE", TSFPWinner.Name, TSFPWinner.Age, TSFPWinner.City, TSFPWinner.Address, TSFPWinner.PhoneNumber, SelectedNumbers, "6", TSFPW.PrizeAmountPerWinner.ToString("c2"));
                     }
                 }
                 if (TSSPW.PrizeWinnerList.Count > 0)
@@ -390,7 +371,7 @@ namespace Quini6CLI.Core
                             SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
                         }
                         SelectedNumbers = SelectedNumbers.Substring(0, SelectedNumbers.Length - 3);
-                        Winners.AddRow("TRADICIONAL SEGUNDA", "SECOND PRIZE", TSSPWinner.Name, SelectedNumbers, "5", TSSPW.PrizeAmountPerWinner.ToString("c2"));
+                        Winners.AddRow("TRADICIONAL SEGUNDA", "SECOND PRIZE", TSSPWinner.Name, TSSPWinner.Age, TSSPWinner.City, TSSPWinner.Address, TSSPWinner.PhoneNumber, SelectedNumbers, "5", TSSPW.PrizeAmountPerWinner.ToString("c2"));
                     }
                 }
                 if (TSTPW.PrizeWinnerList.Count > 0)
@@ -403,7 +384,7 @@ namespace Quini6CLI.Core
                             SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
                         }
                         SelectedNumbers = SelectedNumbers.Substring(0, SelectedNumbers.Length - 3);
-                        Winners.AddRow("TRADICIONAL SEGUNDA", "THIRD PRIZE", TSTPWinner.Name, SelectedNumbers, "4", TSTPW.PrizeAmountPerWinner.ToString("c2"));
+                        Winners.AddRow("TRADICIONAL SEGUNDA", "THIRD PRIZE", TSTPWinner.Name, TSTPWinner.Age, TSTPWinner.City, TSTPWinner.Address, TSTPWinner.PhoneNumber, SelectedNumbers, "4", TSTPW.PrizeAmountPerWinner.ToString("c2"));
                     }
                 }
                 if (RW.PrizeWinnerList.Count > 0)
@@ -416,7 +397,7 @@ namespace Quini6CLI.Core
                             SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
                         }
                         SelectedNumbers = SelectedNumbers.Substring(0, SelectedNumbers.Length - 3);
-                        Winners.AddRow("REVANCHA", "MAIN PRIZE", RPWinner.Name, SelectedNumbers, "6", RW.PrizeAmountPerWinner.ToString("c2"));
+                        Winners.AddRow("REVANCHA", "MAIN PRIZE", RPWinner.Name, RPWinner.Age, RPWinner.City, RPWinner.Address, RPWinner.PhoneNumber, SelectedNumbers, "6", RW.PrizeAmountPerWinner.ToString("c2"));
                     }
                 }
                 if (SSW.PrizeWinnerList.Count > 0)
@@ -429,7 +410,7 @@ namespace Quini6CLI.Core
                             SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
                         }
                         SelectedNumbers = SelectedNumbers.Substring(0, SelectedNumbers.Length - 3);
-                        Winners.AddRow("SIEMPRE SALE", "MAIN PRIZE", SSPWinner.Name, SelectedNumbers, SSW.SiempreSaleWinnersNumberofMatches, SSW.PrizeAmountPerWinner.ToString("c2"));
+                        Winners.AddRow("SIEMPRE SALE", "MAIN PRIZE", SSPWinner.Name, SSPWinner.Age, SSPWinner.City, SSPWinner.Address, SSPWinner.PhoneNumber, SelectedNumbers, SSW.SiempreSaleWinnersNumberofMatches, SSW.PrizeAmountPerWinner.ToString("c2"));
                     }
                 }
                 if (PEW.PrizeWinnerList.Count > 0)
@@ -442,7 +423,7 @@ namespace Quini6CLI.Core
                             SelectedNumbers = SelectedNumbers + Number.ToString("d2") + " - ";
                         }
                         SelectedNumbers = SelectedNumbers.Substring(0, SelectedNumbers.Length - 3);
-                        Winners.AddRow("POZO EXTRA", "MAIN PRIZE", PEPWinner.Name, SelectedNumbers, "6", PEW.PrizeAmountPerWinner.ToString("c2"));
+                        Winners.AddRow("POZO EXTRA", "MAIN PRIZE", PEPWinner.Name, PEPWinner.Age, PEPWinner.City, PEPWinner.Address, PEPWinner.PhoneNumber, SelectedNumbers, "6", PEW.PrizeAmountPerWinner.ToString("c2"));
                     }
                 }
                 Winners.Write(Format.Alternative);

@@ -29,44 +29,37 @@ namespace Quini6CLI.Checkers
             List<Player> SiempreSalePotentialWinnersThreeMatches = new List<Player>();
             List<Player> SiempreSalePotentialWinnersTwoMatches = new List<Player>();
             List<Player> SiempreSalePotentialWinnersOneMatch = new List<Player>();
-            List<Player> NoPrize = new List<Player>();
+            IResultChecker RC = new ResultChecker();
+            IPrizeProvider PP = new PrizeProvider();
             foreach (Player SSPlayer in Results.Players)
             {
-                IResultChecker RC = new ResultChecker();
-                IPrizeProvider PP = new PrizeProvider();
                 PrizeTypeSiempreSale SiempreSalePlayerResults = PP.CheckMatchesSiempreSale(RC.GetMatchingNumbers(SSPlayer.Quini6Ticket.SelectedNumbers, Results.DrawingResults));
-                if (SiempreSalePlayerResults == PrizeTypeSiempreSale.PotentialWinnerSixMatches)
+                switch (SiempreSalePlayerResults)
                 {
-                    SiempreSalePotentialWinnersSixMatches.Add(SSPlayer);
-                }
-                else if (SiempreSalePlayerResults == PrizeTypeSiempreSale.PotentialWinnerFiveMatches)
-                {
-                    SiempreSalePotentialWinnersFiveMatches.Add(SSPlayer);
-                }
-                else if (SiempreSalePlayerResults == PrizeTypeSiempreSale.PotentialWinnerFourMatches)
-                {
-                    SiempreSalePotentialWinnersFourMatches.Add(SSPlayer);
-                }
-                else if (SiempreSalePlayerResults == PrizeTypeSiempreSale.PotentialWinnerThreeMatches)
-                {
-                    SiempreSalePotentialWinnersThreeMatches.Add(SSPlayer);
-                }
-                else if (SiempreSalePlayerResults == PrizeTypeSiempreSale.PotentialWinnerTwoMatches)
-                {
-                    SiempreSalePotentialWinnersTwoMatches.Add(SSPlayer);
-                }
-                else if (SiempreSalePlayerResults == PrizeTypeSiempreSale.PotentialWinnerOneMatch)
-                {
-                    SiempreSalePotentialWinnersOneMatch.Add(SSPlayer);
-                }
-                else
-                {
-                    NoPrize.Add(SSPlayer);
+                    case PrizeTypeSiempreSale.PotentialWinnerSixMatches:
+                        SiempreSalePotentialWinnersSixMatches.Add(SSPlayer);
+                        break;
+                    case PrizeTypeSiempreSale.PotentialWinnerFiveMatches:
+                        SiempreSalePotentialWinnersFiveMatches.Add(SSPlayer);
+                        break;
+                    case PrizeTypeSiempreSale.PotentialWinnerFourMatches:
+                        SiempreSalePotentialWinnersFourMatches.Add(SSPlayer);
+                        break;
+                    case PrizeTypeSiempreSale.PotentialWinnerThreeMatches:
+                        SiempreSalePotentialWinnersThreeMatches.Add(SSPlayer);
+                        break;
+                    case PrizeTypeSiempreSale.PotentialWinnerTwoMatches:
+                        SiempreSalePotentialWinnersTwoMatches.Add(SSPlayer);
+                        break;
+                    case PrizeTypeSiempreSale.PotentialWinnerOneMatch:
+                        SiempreSalePotentialWinnersOneMatch.Add(SSPlayer);
+                        break;
+                    default:
+                        break;
                 }
             }
 
             int NumberOfMatchesWinners = 0;
-
             if (SiempreSalePotentialWinnersSixMatches.Any())
             {
                 foreach (Player SSPlayer in SiempreSalePotentialWinnersSixMatches)
@@ -114,14 +107,6 @@ namespace Quini6CLI.Checkers
                     SiempreSalePrizeWinners.Add(SSPlayer);
                 }
                 NumberOfMatchesWinners = 1;
-            }
-
-            foreach (Player SSPlayer in Results.Players)
-            {
-                if (!SiempreSalePrizeWinners.Contains(SSPlayer))
-                {
-                    NoPrize.Add(SSPlayer);
-                }
             }
 
             return new SiempreSaleWinners(Prize, SiempreSalePrizeWinners, NumberOfMatchesWinners);
