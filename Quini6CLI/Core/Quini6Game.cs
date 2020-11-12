@@ -35,7 +35,8 @@ namespace Quini6CLI.Core
         {
             PrintProgramStartup();
 
-            PrintTotalSells(CalculateTotalSells());
+            decimal TotalSells = CalculateTotalSells();
+            PrintTotalSells(TotalSells);
 
             PrizeGenerator PG = GetPrizes();
             PrintPrizes(PG);

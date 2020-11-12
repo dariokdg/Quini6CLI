@@ -29,8 +29,8 @@ namespace Quini6CLI.Checkers
         {
             List<Player> PozoExtraPlayers = new List<Player>();
             List<Player> PozoExtraPrizeWinners = new List<Player>();
-            ResultChecker RC = new ResultChecker();
-            PrizeProvider PP = new PrizeProvider();
+            IResultChecker RC = new ResultChecker();
+            IPrizeProvider PP = new PrizeProvider();
 
             //Pozo extra: to participate here the player must not have any 6 hits in any of the other drawings (excluding 'Siempre Sale')
             foreach (Player PotentialPozoExtraPlayer in Results.Players)

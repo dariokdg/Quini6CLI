@@ -32,8 +32,8 @@ namespace Quini6CLI.Checkers
             List<Player> NoPrize = new List<Player>();
             foreach (Player SSPlayer in Results.Players)
             {
-                ResultChecker RC = new ResultChecker();
-                PrizeProvider PP = new PrizeProvider();
+                IResultChecker RC = new ResultChecker();
+                IPrizeProvider PP = new PrizeProvider();
                 PrizeTypeSiempreSale SiempreSalePlayerResults = PP.CheckMatchesSiempreSale(RC.GetMatchingNumbers(SSPlayer.Quini6Ticket.SelectedNumbers, Results.DrawingResults));
                 if (SiempreSalePlayerResults == PrizeTypeSiempreSale.PotentialWinnerSixMatches)
                 {

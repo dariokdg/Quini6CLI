@@ -22,8 +22,8 @@ namespace Quini6CLI.Checkers
         public IWinner CheckPrizes()
         {
             List<Player> TradicionalPrimeraThirdPrizeWinners = new List<Player>();
-            ResultChecker RC = new ResultChecker();
-            PrizeProvider PP = new PrizeProvider();
+            IResultChecker RC = new ResultChecker();
+            IPrizeProvider PP = new PrizeProvider();
             foreach (Player TPPlayer in Results.Players)
             {
                 int MatchingNumbers = RC.GetMatchingNumbers(TPPlayer.Quini6Ticket.SelectedNumbers, Results.DrawingResults);
