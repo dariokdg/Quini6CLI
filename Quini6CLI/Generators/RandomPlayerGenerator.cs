@@ -1,4 +1,5 @@
 ﻿using Quini6CLI.Core;
+using Quini6CLI.Interfaces;
 using RandomNameGeneratorLibrary;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace Quini6CLI.Generators
         Random R = new Random();
         PersonNameGenerator PNG = new PersonNameGenerator();
         PlaceNameGenerator CNG = new PlaceNameGenerator();
-        ResultGenerator RG = new ResultGenerator();
+        IResultGenerator RG = new ResultGenerator();
 
         public RandomPlayerGenerator()
         {

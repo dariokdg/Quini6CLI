@@ -4,13 +4,12 @@ namespace Quini6CLI.Generators
 {
     class RandomNumberGenerator : IRandomNumber
     {
-        private int InclusiveLowerBound { get; set; }
-        private int ExclusiveUpperBound { get; set; }
+        private static readonly int InclusiveLowerBound = 0;
+        private static readonly int ExclusiveUpperBound = 46;
 
         public RandomNumberGenerator()
         {
-            InclusiveLowerBound = 0;
-            ExclusiveUpperBound = 46;
+
         }
 
         public int GetRandomQuini6Number()

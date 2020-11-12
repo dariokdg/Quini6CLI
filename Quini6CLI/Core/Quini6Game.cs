@@ -92,7 +92,7 @@ namespace Quini6CLI.Core
 
         private List<GameTypeResult> ExecuteDrawings()
         {
-            ResultGenerator Q6RG = new ResultGenerator();
+            IResultGenerator Q6RG = new ResultGenerator();
             GameTypeResult GTRTP = ExecuteTradicionalPrimera(Q6RG);
             GameTypeResult GTRTS = ExecuteTradicionalSegunda(Q6RG);
             GameTypeResult GTRR = ExecuteRevancha(Q6RG);

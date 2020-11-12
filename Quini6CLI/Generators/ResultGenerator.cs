@@ -1,8 +1,5 @@
 ﻿using Quini6CLI.Interfaces;
-using Quini6CLI.Providers;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Quini6CLI.Generators
 {
@@ -22,7 +19,7 @@ namespace Quini6CLI.Generators
 
         public List<int> GenerateDrawingResults()
         {
-            RandomNumberGenerator RNP = new RandomNumberGenerator();
+            IRandomNumber RNP = new RandomNumberGenerator();
             FirstNumber = GetFirstNumber(RNP);
             SecondNumber = GetSecondNumber(RNP);
             ThirdNumber = GetThirdNumber(RNP);
