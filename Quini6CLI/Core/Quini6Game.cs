@@ -16,15 +16,6 @@ namespace Quini6CLI.Core
         private static decimal TotalTradicionalSales = 0;
         private static decimal TotalRevanchaSales = 0;
         private static decimal TotalSiempreSaleSales = 0;
-        private static decimal TradicionalPrimeraFirstPrize = 0;
-        private static decimal TradicionalPrimeraSecondPrize = 0;
-        private static decimal TradicionalPrimeraThirdPrize = 0;
-        private static decimal TradicionalSegundaFirstPrize = 0;
-        private static decimal TradicionalSegundaSecondPrize = 0;
-        private static decimal TradicionalSegundaThirdPrize = 0;
-        private static decimal RevanchaPrize = 0;
-        private static decimal SiempreSalePrize = 0;
-        private static decimal PozoExtraPrize = 0;
 
         private List<Player> Players { get; set; }
         public List<int> TradicionalPrimeraNumbers { get; set; }
@@ -40,6 +31,24 @@ namespace Quini6CLI.Core
 
         public Quini6Winners ExecuteQuini6Game()
         {
+            PrintProgramStartup();
+
+            PrintTotalSells(CalculateTotalSells());
+
+            PrizeGenerator PG = GetPrizes();
+            PrintPrizes(PG);
+
+            List<GameTypeResult> Drawings = ExecuteDrawings();
+            PrintDrawingResults(Drawings);
+
+            Quini6Winners Q6W = CalculateWinners(Drawings, PG);
+            PrintWinners(Q6W, PG);
+
+            return Q6W;
+        }
+
+        private void PrintProgramStartup()
+        {
             Console.WriteLine("----------------------");
             Console.WriteLine($"QUINI 6 GAME STARTED: {DateTime.Now}");
             Console.WriteLine("----------------------");
@@ -48,18 +57,6 @@ namespace Quini6CLI.Core
             Console.WriteLine("----------------------");
             Console.WriteLine($"NUMBER OF PLAYERS: {Players.Count}");
             Console.WriteLine("----------------------");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("----------------------");
-            Console.WriteLine($"TOTAL SELLS: {CalculateTotalSells().ToString("c2")}");
-            Console.WriteLine("----------------------");
-            CalculatePrizes();
-            PrintPrizes();
-            List<GameTypeResult> Drawings = ExecuteDrawings();
-            PrintDrawingResults(Drawings);
-            Quini6Winners Q6W = CalculateWinners(Drawings);
-            PrintWinners(Q6W);
-            return Q6W;
         }
 
         private decimal CalculateTotalSells()
@@ -76,17 +73,18 @@ namespace Quini6CLI.Core
             return TotalSells;
         }
 
-        private void CalculatePrizes()
+        private void PrintTotalSells(decimal TotalSells)
+        {
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("----------------------");
+            Console.WriteLine($"TOTAL SELLS: {TotalSells:c2}");
+            Console.WriteLine("----------------------");
+        }
+
+        private PrizeGenerator GetPrizes()
         { 
-            TradicionalPrimeraFirstPrize = TotalTradicionalSales * 0.5m * 0.4m * 0.7m;
-            TradicionalPrimeraSecondPrize = TotalTradicionalSales * 0.5m * 0.4m * 0.1m;
-            TradicionalPrimeraThirdPrize = TotalTradicionalSales * 0.5m * 0.4m * 0.03m;
-            TradicionalSegundaFirstPrize = TotalTradicionalSales * 0.5m * 0.4m * 0.7m;
-            TradicionalSegundaSecondPrize = TotalTradicionalSales * 0.5m * 0.4m * 0.1m;
-            TradicionalSegundaThirdPrize = TotalTradicionalSales * 0.5m * 0.4m * 0.03m;
-            RevanchaPrize = TotalRevanchaSales * 0.9m * 0.6m * 0.8m;
-            SiempreSalePrize = TotalSiempreSaleSales * 0.9m * 0.6m * 0.6m;
-            PozoExtraPrize = (TotalTradicionalSales * 0.5m * 0.163m) + (TotalTradicionalSales * 0.5m * 0.163m) + (TotalRevanchaSales * 0.9m * 0.6m * 0.192m) + (TotalSiempreSaleSales * 0.9m * 0.6m * 0.4m);
+            return new PrizeGenerator(TotalTradicionalSales, TotalRevanchaSales, TotalSiempreSaleSales);
         }
 
         private List<GameTypeResult> ExecuteDrawings()
@@ -146,7 +144,7 @@ namespace Quini6CLI.Core
             return GTR;
         }
 
-        private Quini6Winners CalculateWinners(List<GameTypeResult> Drawings)
+        private Quini6Winners CalculateWinners(List<GameTypeResult> Drawings, PrizeGenerator PG)
         {
             GameTypeResult GTRTP = Drawings.First(d => d.Quini6GameType == GameType.TradicionalPrimera);
             GameTypeResult GTRTS = Drawings.First(d => d.Quini6GameType == GameType.TradicionalSegunda);
@@ -154,11 +152,11 @@ namespace Quini6CLI.Core
             GameTypeResult GTRSS = Drawings.First(d => d.Quini6GameType == GameType.SiempreSale);
             GameTypeResult GTRPE = Drawings.First(d => d.Quini6GameType == GameType.PozoExtra);
 
-            PrizeCheckerTradicionalPrimera PCTP = new PrizeCheckerTradicionalPrimera(GTRTP, TradicionalPrimeraFirstPrize, TradicionalPrimeraSecondPrize, TradicionalPrimeraThirdPrize);
-            PrizeCheckerTradicionalSegunda PCTS = new PrizeCheckerTradicionalSegunda(GTRTS, TradicionalSegundaFirstPrize, TradicionalSegundaSecondPrize, TradicionalSegundaThirdPrize);
-            PrizeCheckerRevancha PCR = new PrizeCheckerRevancha(GTRR, RevanchaPrize);
-            PrizeCheckerSiempreSale PCSS = new PrizeCheckerSiempreSale(GTRSS, SiempreSalePrize);
-            PrizeCheckerPozoExtra PCPE = new PrizeCheckerPozoExtra(GTRPE, PozoExtraPrize);
+            PrizeCheckerTradicionalPrimera PCTP = new PrizeCheckerTradicionalPrimera(GTRTP, PG.TradicionalPrimeraFirstPrize, PG.TradicionalPrimeraSecondPrize, PG.TradicionalPrimeraThirdPrize);
+            PrizeCheckerTradicionalSegunda PCTS = new PrizeCheckerTradicionalSegunda(GTRTS, PG.TradicionalSegundaFirstPrize, PG.TradicionalSegundaSecondPrize, PG.TradicionalSegundaThirdPrize);
+            PrizeCheckerRevancha PCR = new PrizeCheckerRevancha(GTRR, PG.RevanchaPrize);
+            PrizeCheckerSiempreSale PCSS = new PrizeCheckerSiempreSale(GTRSS, PG.SiempreSalePrize);
+            PrizeCheckerPozoExtra PCPE = new PrizeCheckerPozoExtra(GTRPE, PG.PozoExtraPrize);
 
             TradicionalPrimeraWinners TPW = PCTP.CheckPrizes();
             TradicionalSegundaWinners TSW = PCTS.CheckPrizes();
@@ -171,7 +169,7 @@ namespace Quini6CLI.Core
             return Q6W;
         }
 
-        private void PrintPrizes()
+        private void PrintPrizes(PrizeGenerator PG)
         {
             Console.WriteLine("");
             Console.WriteLine("");
@@ -181,15 +179,15 @@ namespace Quini6CLI.Core
             Console.WriteLine("");
 
             ConsoleTable Results = new ConsoleTable("GAME TYPE", "PRIZE CATEGORY", "NUMBER OF HITS", "TOTAL PRIZE");
-            Results.AddRow("TRADICIONAL PRIMERA", "FIRST PRIZE", "6", TradicionalPrimeraFirstPrize.ToString("c2"));
-            Results.AddRow("TRADICIONAL PRIMERA", "SECOND PRIZE", "5", TradicionalPrimeraSecondPrize.ToString("c2"));
-            Results.AddRow("TRADICIONAL PRIMERA", "THIRD PRIZE", "4", TradicionalPrimeraThirdPrize.ToString("c2"));
-            Results.AddRow("TRADICIONAL SEGUNDA", "FIRST PRIZE", "6", TradicionalSegundaFirstPrize.ToString("c2"));
-            Results.AddRow("TRADICIONAL SEGUNDA", "SECOND PRIZE", "5", TradicionalSegundaSecondPrize.ToString("c2"));
-            Results.AddRow("TRADICIONAL SEGUNDA", "THIRD PRIZE", "4", TradicionalSegundaThirdPrize.ToString("c2"));
-            Results.AddRow("REVANCHA", "MAIN PRIZE", "6", RevanchaPrize.ToString("c2"));
-            Results.AddRow("SIEMPRE SALE", "MAIN PRIZE", "6/5/4/3/2/1", SiempreSalePrize.ToString("c2"));
-            Results.AddRow("POZO EXTRA", "MAIN PRIZE", "6", PozoExtraPrize.ToString("c2"));
+            Results.AddRow("TRADICIONAL PRIMERA", "FIRST PRIZE", "6", PG.TradicionalPrimeraFirstPrize.ToString("c2"));
+            Results.AddRow("TRADICIONAL PRIMERA", "SECOND PRIZE", "5", PG.TradicionalPrimeraSecondPrize.ToString("c2"));
+            Results.AddRow("TRADICIONAL PRIMERA", "THIRD PRIZE", "4", PG.TradicionalPrimeraThirdPrize.ToString("c2"));
+            Results.AddRow("TRADICIONAL SEGUNDA", "FIRST PRIZE", "6", PG.TradicionalSegundaFirstPrize.ToString("c2"));
+            Results.AddRow("TRADICIONAL SEGUNDA", "SECOND PRIZE", "5", PG.TradicionalSegundaSecondPrize.ToString("c2"));
+            Results.AddRow("TRADICIONAL SEGUNDA", "THIRD PRIZE", "4", PG.TradicionalSegundaThirdPrize.ToString("c2"));
+            Results.AddRow("REVANCHA", "MAIN PRIZE", "6", PG.RevanchaPrize.ToString("c2"));
+            Results.AddRow("SIEMPRE SALE", "MAIN PRIZE", "6/5/4/3/2/1", PG.SiempreSalePrize.ToString("c2"));
+            Results.AddRow("POZO EXTRA", "MAIN PRIZE", "6", PG.PozoExtraPrize.ToString("c2"));
             Results.Write(Format.Alternative);
         }
 
@@ -249,7 +247,7 @@ namespace Quini6CLI.Core
             PozoExtraResults.Write(Format.Alternative);
         }
 
-        private void PrintWinners(Quini6Winners Q6W)
+        private void PrintWinners(Quini6Winners Q6W, PrizeGenerator PG)
         {
             TradicionalPrimeraWinners TPW = Q6W.TPW;
             TradicionalSegundaWinners TSW = Q6W.TSW;
@@ -266,15 +264,15 @@ namespace Quini6CLI.Core
             Console.WriteLine("");
 
             ConsoleTable Results = new ConsoleTable("GAME TYPE", "PRIZE CATEGORY", "TOTAL PRIZE AMOUNT", "NUMBER OF WINNERS", "NUMBER OF HITS", "PRIZE FOR EACH WINNER");
-            Results.AddRow("TRADICIONAL PRIMERA", "FIRST PRIZE", TradicionalPrimeraFirstPrize.ToString("c2"), TPW.TradicionalPrimeraFirstPrizeWinners.Count, "6", TPW.TradicionalPrimeraFirstPrizeAmountPerWinner.ToString("c2"));
-            Results.AddRow("TRADICIONAL PRIMERA", "SECOND PRIZE", TradicionalPrimeraSecondPrize.ToString("c2"), TPW.TradicionalPrimeraSecondPrizeWinners.Count, "5", TPW.TradicionalPrimeraSecondPrizeAmountPerWinner.ToString("c2"));
-            Results.AddRow("TRADICIONAL PRIMERA", "THIRD PRIZE", TradicionalPrimeraThirdPrize.ToString("c2"), TPW.TradicionalPrimeraThirdPrizeWinners.Count, "4", TPW.TradicionalPrimeraThirdPrizeAmountPerWinner.ToString("c2"));
-            Results.AddRow("TRADICIONAL SEGUNDA", "FIRST PRIZE", TradicionalSegundaFirstPrize.ToString("c2"), TSW.TradicionalSegundaFirstPrizeWinners.Count, "6", TSW.TradicionalSegundaFirstPrizeAmountPerWinner.ToString("c2"));
-            Results.AddRow("TRADICIONAL SEGUNDA", "SECOND PRIZE", TradicionalSegundaSecondPrize.ToString("c2"), TSW.TradicionalSegundaSecondPrizeWinners.Count, "5", TSW.TradicionalSegundaSecondPrizeAmountPerWinner.ToString("c2"));
-            Results.AddRow("TRADICIONAL SEGUNDA", "THIRD PRIZE", TradicionalSegundaThirdPrize.ToString("c2"), TSW.TradicionalSegundaThirdPrizeWinners.Count, "4", TSW.TradicionalSegundaThirdPrizeAmountPerWinner.ToString("c2"));
-            Results.AddRow("REVANCHA", "MAIN PRIZE", RevanchaPrize.ToString("c2"), RW.RevanchaPrizeWinners.Count, "6", RW.RevanchaPrizeAmountPerWinner.ToString("c2"));
-            Results.AddRow("SIEMPRE SALE", "MAIN PRIZE", SiempreSalePrize.ToString("c2"), SSW.SiempreSalePrizeWinners.Count, SSW.SiempreSaleWinnersNumberofMatches, SSW.SiempreSalePrizeAmountPerWinner.ToString("c2"));
-            Results.AddRow("POZO EXTRA", "MAIN PRIZE", PozoExtraPrize.ToString("c2"), PEW.PozoExtraPrizeWinners.Count, "6", PEW.PozoExtraPrizeAmountPerWinner.ToString("c2"));
+            Results.AddRow("TRADICIONAL PRIMERA", "FIRST PRIZE", PG.TradicionalPrimeraFirstPrize.ToString("c2"), TPW.TradicionalPrimeraFirstPrizeWinners.Count, "6", TPW.TradicionalPrimeraFirstPrizeAmountPerWinner.ToString("c2"));
+            Results.AddRow("TRADICIONAL PRIMERA", "SECOND PRIZE", PG.TradicionalPrimeraSecondPrize.ToString("c2"), TPW.TradicionalPrimeraSecondPrizeWinners.Count, "5", TPW.TradicionalPrimeraSecondPrizeAmountPerWinner.ToString("c2"));
+            Results.AddRow("TRADICIONAL PRIMERA", "THIRD PRIZE", PG.TradicionalPrimeraThirdPrize.ToString("c2"), TPW.TradicionalPrimeraThirdPrizeWinners.Count, "4", TPW.TradicionalPrimeraThirdPrizeAmountPerWinner.ToString("c2"));
+            Results.AddRow("TRADICIONAL SEGUNDA", "FIRST PRIZE", PG.TradicionalSegundaFirstPrize.ToString("c2"), TSW.TradicionalSegundaFirstPrizeWinners.Count, "6", TSW.TradicionalSegundaFirstPrizeAmountPerWinner.ToString("c2"));
+            Results.AddRow("TRADICIONAL SEGUNDA", "SECOND PRIZE", PG.TradicionalSegundaSecondPrize.ToString("c2"), TSW.TradicionalSegundaSecondPrizeWinners.Count, "5", TSW.TradicionalSegundaSecondPrizeAmountPerWinner.ToString("c2"));
+            Results.AddRow("TRADICIONAL SEGUNDA", "THIRD PRIZE", PG.TradicionalSegundaThirdPrize.ToString("c2"), TSW.TradicionalSegundaThirdPrizeWinners.Count, "4", TSW.TradicionalSegundaThirdPrizeAmountPerWinner.ToString("c2"));
+            Results.AddRow("REVANCHA", "MAIN PRIZE", PG.RevanchaPrize.ToString("c2"), RW.RevanchaPrizeWinners.Count, "6", RW.RevanchaPrizeAmountPerWinner.ToString("c2"));
+            Results.AddRow("SIEMPRE SALE", "MAIN PRIZE", PG.SiempreSalePrize.ToString("c2"), SSW.SiempreSalePrizeWinners.Count, SSW.SiempreSaleWinnersNumberofMatches, SSW.SiempreSalePrizeAmountPerWinner.ToString("c2"));
+            Results.AddRow("POZO EXTRA", "MAIN PRIZE", PG.PozoExtraPrize.ToString("c2"), PEW.PozoExtraPrizeWinners.Count, "6", PEW.PozoExtraPrizeAmountPerWinner.ToString("c2"));
             Results.Write(Format.Alternative);
 
             if (TPW.TradicionalPrimeraFirstPrizeWinners.Count == 0 &&
