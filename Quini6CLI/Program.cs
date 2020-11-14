@@ -59,7 +59,7 @@ namespace Quini6CLI
                         bool IsSecondArgumentANumber = long.TryParse(TestSecondArgument, out long NumberOfPlayersToGenerateSecondArg);
                         if ((IsFirstArgumentANumber && Custom) || (Custom && IsSecondArgumentANumber))
                         {
-                            Players.AddRange(CreateCustomPlayer());
+                            Players = CreateCustomPlayer();
                             if (IsFirstArgumentANumber)
                             {
                                 Players.AddRange(new RandomPlayerGenerator().GenerateListOfRandomPlayers(NumberOfPlayersToGenerateFirstArg));
