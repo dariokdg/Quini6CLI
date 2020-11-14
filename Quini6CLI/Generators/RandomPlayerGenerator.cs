@@ -52,7 +52,6 @@ namespace Quini6CLI.Generators
                 }
                 Console.WriteLine($"ALL {NumberOfRandomPlayers} PLAYERS CREATED");
                 PrintGameStartMessage();
-                Console.Clear();
                 return RandomPlayers;
             }
             else
@@ -61,7 +60,7 @@ namespace Quini6CLI.Generators
             }
         }
 
-        private void PrintGameStartMessage()
+        private static void PrintGameStartMessage()
         {
             Console.Write("STARTING QUINI 6 GAME IN 3.");
             Thread.Sleep(250);

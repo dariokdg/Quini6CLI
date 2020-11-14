@@ -128,6 +128,7 @@ namespace Quini6CLI.Core
         #region --- Console print section ---
         private static void PrintProgramStartup()
         {
+            Console.Clear();
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine($"QUINI 6 GAME STARTED: {DateTime.Now}");
             Console.WriteLine("--------------------------------------------");
