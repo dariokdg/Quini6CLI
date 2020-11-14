@@ -13,7 +13,10 @@ Bottomline: there is only one file _(a large .exe)_ but that's all you need to r
   
   
 ## Usage
-```Quini6CLI.exe [Number of players as integer (optional)] [Iterate until jackpot command '--jackpot' (optional)]```
+```Quini6CLI.exe [Number of players as integer (optional)] [Iterate until jackpot command '--jackpot' (optional)] [Create custom player command '--custom' (optional)]```
+  
+> Note on parameters:
+> starting from version v1.1 parameters can be provided in any order!  
   
 ```
 Number of players: optional parameter
@@ -22,9 +25,13 @@ Number of players: optional parameter
 ```  
 ```
 Iterate until jackpot: optional parameter
-    Important: to be able to use this parameter, the number of players must be explicitly defined in the "number of players" parameter
     determine if the game should be executed repeatedly until there is a jackpot (a.k.a. first prize) winner
     if this is not provided the game will only run once
+```  
+```
+Create custom player: optional parameter
+    ask the user to input the data necessary for the creation of a single player
+    if this is not provided the game will only run with random-generated players
 ```  
   
   
@@ -35,11 +42,23 @@ Start a single game with `1` player only (randomly generated just like when usin
 Start a single game with `300000` players:  
 ```Quini6CLI.exe 300000```
   
+Start a single game with `50000` players out of which you will create `1`:  
+```Quini6CLI.exe --custom 49999```
+  
+Start a `jackpot-mode` series of games with only `1` custom player:  
+```Quini6CLI.exe --jackpot --custom```
+  
 Start a `jackpot-mode` series of games with `25` players:  
 ```Quini6CLI.exe 25 --jackpot```
   
+Start a single game with only `1` custom player:  
+```Quini6CLI.exe --custom```
+  
 Start a `jackpot-mode` series of games with `10000` players:  
-```Quini6CLI.exe 10000 --jackpot```
+```Quini6CLI.exe --jackpot 10000```
+  
+Start a `jackpot-mode` series of games with `25000` players out of which you will create `1`:  
+```Quini6CLI.exe 24999 --custom --jackpot```
   
   
 
