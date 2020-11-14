@@ -22,6 +22,7 @@ Number of players: optional parameter
 ```  
 ```
 Iterate until jackpot: optional parameter
+    Important: to be able to use this parameter, the number of players must be explicitly defined in the "number of players" parameter
     determine if the game should be executed repeatedly until there is a jackpot (a.k.a. first prize) winner
     if this is not provided the game will only run once
 ```  
