@@ -3,9 +3,11 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>x64</Platforms>
     <StartupObject>Quini6CLI.Program</StartupObject>
     <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <NoWarn>NU1605</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
