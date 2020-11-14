@@ -7,41 +7,29 @@ using Quini6CLI.Winners;
 using Quini6CLI.Checkers;
 using Quini6CLI.Generators;
 using Quini6CLI.Interfaces;
-using static Quini6CLI.Enumerators.Enumerators;
 
 namespace Quini6CLI.Core
 {
     class Quini6Game
     {
-        public decimal TotalTradicionalSales { get; set; }
-        public decimal TotalRevanchaSales { get; set; }
-        public decimal TotalSiempreSaleSales { get; set; }
-        public List<Player> Players { get; set; }
-        public List<int> TradicionalPrimeraNumbers { get; set; }
-        public List<int> TradicionalSegundaNumbers { get; set; }
-        public List<int> RevanchaNumbers { get; set; }
-        public List<int> SiempreSaleNumbers { get; set; }
-        public List<int> PozoExtraNumbers { get; set; }
+        private List<Player> Players { get; set; }
 
         public Quini6Game(List<Player> Players)
         {
             this.Players = Players;
-            TotalTradicionalSales = 0;
-            TotalRevanchaSales = 0;
-            TotalSiempreSaleSales = 0;
         }
 
         public Quini6Winners ExecuteQuini6Game()
         {
             PrintProgramStartup();
 
-            decimal TotalSells = CalculateTotalSells();
-            PrintTotalSells(TotalSells);
+            TotalSales TS = CalculateTotalSells();
+            PrintTotalSales(TS);
 
-            PrizeGenerator PG = GetPrizes();
+            PrizeGenerator PG = GetPrizes(TS);
             PrintPrizes(PG);
 
-            List<GameTypeResult> Drawings = ExecuteDrawings();
+            GameResults Drawings = ExecuteDrawings();
             PrintDrawingResults(Drawings);
 
             Quini6Winners Q6W = CalculateWinners(Drawings, PG);
@@ -50,107 +38,51 @@ namespace Quini6CLI.Core
             return Q6W;
         }
 
-        private void PrintProgramStartup()
+        #region --- Base flow functions ---
+        private TotalSales CalculateTotalSells()
         {
-            Console.WriteLine("--------------------------------------------");
-            Console.WriteLine($"QUINI 6 GAME STARTED: {DateTime.Now}");
-            Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("\n\n\n--------------------------------------------");
-            Console.WriteLine($"NUMBER OF PLAYERS: {Players.Count}");
-            Console.WriteLine("--------------------------------------------");
-        }
-
-        private decimal CalculateTotalSells()
-        {
-            decimal TotalSells = 0;
+            decimal TotalTradicionalSales = 0;
+            int TotalTradicionalPlayers = 0;
+            decimal TotalRevanchaSales = 0;
+            int TotalRevanchaPlayers = 0;
+            decimal TotalSiempreSaleSales = 0;
+            int TotalSiempreSalePlayers = 0;
             foreach (Player Quini6Player in Players)
             {
                 GameSpends GS = Quini6Player.CheckSpends();
                 TotalTradicionalSales += GS.TradicionalSpends;
                 TotalRevanchaSales += GS.RevanchaSpends;
                 TotalSiempreSaleSales += GS.SiempreSaleSpends;
-                TotalSells += (GS.TradicionalSpends + GS.RevanchaSpends + GS.SiempreSaleSpends);
+                if (GS.SiempreSaleSpends > 0)
+                {
+                    TotalSiempreSalePlayers++;
+                }
+                else if (GS.RevanchaSpends > 0)
+                {
+                    TotalRevanchaPlayers++;
+                }
+                else
+                {
+                    TotalTradicionalPlayers++;
+                }
             }
-            return TotalSells;
+            TotalSales TS = new TotalSales(TotalTradicionalSales, TotalTradicionalPlayers, TotalRevanchaSales, TotalRevanchaPlayers, TotalSiempreSaleSales, TotalSiempreSalePlayers);
+            return TS;
         }
 
-        private void PrintTotalSells(decimal TotalSells)
-        {
-            Console.WriteLine("\n\n\n--------------------------------------------");
-            Console.WriteLine($"TOTAL SELLS: {TotalSells:c2}");
-            Console.WriteLine("--------------------------------------------");
-        }
-
-        private PrizeGenerator GetPrizes()
+        private static PrizeGenerator GetPrizes(TotalSales TS)
         { 
-            return new PrizeGenerator(TotalTradicionalSales, TotalRevanchaSales, TotalSiempreSaleSales);
+            return new PrizeGenerator(TS.TotalTradicionalSales, TS.TotalRevanchaSales, TS.TotalSiempreSaleSales);
         }
 
-        private List<GameTypeResult> ExecuteDrawings()
+        private GameResults ExecuteDrawings()
         {
-            IResultGenerator Q6RG = new ResultGenerator();
-            GameTypeResult GTRTP = ExecuteTradicionalPrimera(Q6RG);
-            GameTypeResult GTRTS = ExecuteTradicionalSegunda(Q6RG);
-            GameTypeResult GTRR = ExecuteRevancha(Q6RG);
-            GameTypeResult GTRSS = ExecuteSiempreSale(Q6RG);
-            GameTypeResult GTRPE = ExecutePozoExtra();
-            return new List<GameTypeResult> { GTRTP, GTRTS, GTRR, GTRSS, GTRPE };
+            return new GameResultGenerator(Players, new DrawingResultGenerator()).GetGameResults();
         }
 
-        private GameTypeResult ExecuteTradicionalPrimera(IResultGenerator Q6RG)
+        private Quini6Winners CalculateWinners(GameResults Drawings, PrizeGenerator PG)
         {
-            TradicionalPrimeraNumbers = Q6RG.GenerateDrawingResults();
-            TradicionalPrimeraNumbers.Sort();
-            GameTypeResult GTR = new GameTypeResult(Players, GameType.TradicionalPrimera, TradicionalPrimeraNumbers);
-            return GTR;
-        }
-
-        private GameTypeResult ExecuteTradicionalSegunda(IResultGenerator Q6RG)
-        {
-            TradicionalSegundaNumbers = Q6RG.GenerateDrawingResults();
-            TradicionalSegundaNumbers.Sort();
-            GameTypeResult GTR = new GameTypeResult(Players, Enumerators.Enumerators.GameType.TradicionalSegunda, TradicionalSegundaNumbers);
-            return GTR;
-        }
-
-        private GameTypeResult ExecuteRevancha(IResultGenerator Q6RG)
-        {
-            RevanchaNumbers = Q6RG.GenerateDrawingResults();
-            RevanchaNumbers.Sort();
-            Players = Players.Where(p => p.Quini6Ticket.Games == GameParticipation.TradicionalAndRevancha || p.Quini6Ticket.Games == GameParticipation.TradicionalAndRevanchaAndSiempreSale).ToList();
-            GameTypeResult GTR = new GameTypeResult(Players, GameType.Revancha, RevanchaNumbers);
-            return GTR;
-        }
-
-        private GameTypeResult ExecuteSiempreSale(IResultGenerator Q6RG)
-        {
-            SiempreSaleNumbers = Q6RG.GenerateDrawingResults();
-            SiempreSaleNumbers.Sort();
-            Players = Players.Where(p => p.Quini6Ticket.Games == GameParticipation.TradicionalAndRevanchaAndSiempreSale).ToList();
-            GameTypeResult GTR = new GameTypeResult(Players, GameType.SiempreSale, SiempreSaleNumbers);
-            return GTR;
-        }
-
-        private GameTypeResult ExecutePozoExtra()
-        {
-            List<int> TemporaryList = new List<int>();
-            TemporaryList.AddRange(TradicionalPrimeraNumbers);
-            TemporaryList.AddRange(TradicionalSegundaNumbers);
-            TemporaryList.AddRange(RevanchaNumbers);
-            PozoExtraNumbers = TemporaryList.Distinct().ToList();
-            PozoExtraNumbers.Sort();
-            GameTypeResult GTR = new GameTypeResult(Players, Enumerators.Enumerators.GameType.PozoExtra, PozoExtraNumbers);
-            return GTR;
-        }
-
-        private Quini6Winners CalculateWinners(List<GameTypeResult> Drawings, PrizeGenerator PG)
-        {
-            GameTypeResult GTRTP = Drawings.First(d => d.Quini6GameType == GameType.TradicionalPrimera);
-            GameTypeResult GTRTS = Drawings.First(d => d.Quini6GameType == GameType.TradicionalSegunda);
-            GameTypeResult GTRR = Drawings.First(d => d.Quini6GameType == GameType.Revancha);
-            GameTypeResult GTRSS = Drawings.First(d => d.Quini6GameType == GameType.SiempreSale);
-            GameTypeResult GTRPE = Drawings.First(d => d.Quini6GameType == GameType.PozoExtra);
-
+            GameTypeResult GTRTP = Drawings.GTRTP;
             PrizeCheckerTradicionalPrimeraFirstPrize PCTPFP = new PrizeCheckerTradicionalPrimeraFirstPrize(GTRTP, PG.TradicionalPrimeraFirstPrize);
             IWinner TPFPW = PCTPFP.CheckPrizes();
 
@@ -160,6 +92,8 @@ namespace Quini6CLI.Core
             PrizeCheckerTradicionalPrimeraThirdPrize PCTPTP = new PrizeCheckerTradicionalPrimeraThirdPrize(GTRTP, PG.TradicionalPrimeraThirdPrize);
             IWinner TPTPW = PCTPTP.CheckPrizes();
 
+
+            GameTypeResult GTRTS = Drawings.GTRTS;
             PrizeCheckerTradicionalSegundaFirstPrize PCTSFP = new PrizeCheckerTradicionalSegundaFirstPrize(GTRTS, PG.TradicionalSegundaFirstPrize);
             IWinner TSFPW = PCTSFP.CheckPrizes();
 
@@ -169,12 +103,18 @@ namespace Quini6CLI.Core
             PrizeCheckerTradicionalSegundaThirdPrize PCTSTP = new PrizeCheckerTradicionalSegundaThirdPrize(GTRTS, PG.TradicionalSegundaThirdPrize);
             IWinner TSTPW = PCTSTP.CheckPrizes();
 
+
+            GameTypeResult GTRR = Drawings.GTRR;
             PrizeCheckerRevancha PCR = new PrizeCheckerRevancha(GTRR, PG.RevanchaPrize);
             IWinner RW = PCR.CheckPrizes();
 
+
+            GameTypeResult GTRSS = Drawings.GTRSS;
             PrizeCheckerSiempreSale PCSS = new PrizeCheckerSiempreSale(GTRSS, PG.SiempreSalePrize);
             IWinner SSW = PCSS.CheckPrizes();
 
+
+            GameTypeResult GTRPE = Drawings.GTRPE;
             PrizeCheckerPozoExtra PCPE = new PrizeCheckerPozoExtra(GTRPE, PG.PozoExtraPrize, TPFPW, TSFPW, RW);
             IWinner PEW = PCPE.CheckPrizes();
 
@@ -183,8 +123,33 @@ namespace Quini6CLI.Core
 
             return Q6W;
         }
+        #endregion
 
-        private void PrintPrizes(PrizeGenerator PG)
+        #region --- Console print section ---
+        private static void PrintProgramStartup()
+        {
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine($"QUINI 6 GAME STARTED: {DateTime.Now}");
+            Console.WriteLine("--------------------------------------------");
+        }
+
+        private static void PrintTotalSales(TotalSales TS)
+        {
+            Console.WriteLine("\n\n\n--------------------------------------------");
+            Console.WriteLine($"TOTAL NUMBER OF PLAYERS: {TS.GetTotalGamePlayers()}");
+            Console.WriteLine($"    > TRADICIONAL PLAYERS: {TS.TotalTradicionalPlayers}");
+            Console.WriteLine($"    > REVANCHA PLAYERS: {TS.TotalRevanchaPlayers}");
+            Console.WriteLine($"    > SIEMPRE SALE PLAYERS: {TS.TotalSiempreSalePlayers}");
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("\n\n\n--------------------------------------------");
+            Console.WriteLine($"TOTAL SALES: {TS.GetTotalGameSales():c2}");
+            Console.WriteLine($"    > TRADICIONAL SALES: {TS.TotalTradicionalSales:c2}");
+            Console.WriteLine($"    > REVANCHA SALES: {TS.TotalRevanchaSales:c2}");
+            Console.WriteLine($"    > SIEMPRE SALE SALES: {TS.TotalSiempreSaleSales:c2}");
+            Console.WriteLine("--------------------------------------------");
+        }
+
+        private static void PrintPrizes(PrizeGenerator PG)
         {
             Console.WriteLine("\n\n\n--------------------------------------------");
             Console.WriteLine("QUINI 6 PRIZE LIST:");
@@ -204,13 +169,13 @@ namespace Quini6CLI.Core
             Results.Write(Format.Alternative);
         }
 
-        private void PrintDrawingResults(List<GameTypeResult> DrawingResults)
+        private static void PrintDrawingResults(GameResults DrawingResults)
         {
-            GameTypeResult GTRTP = DrawingResults[0];
-            GameTypeResult GTRTS = DrawingResults[1];
-            GameTypeResult GTRR = DrawingResults[2];
-            GameTypeResult GTRSS = DrawingResults[3];
-            GameTypeResult GTRPE = DrawingResults[4];
+            GameTypeResult GTRTP = DrawingResults.GTRTP;
+            GameTypeResult GTRTS = DrawingResults.GTRTS;
+            GameTypeResult GTRR = DrawingResults.GTRR;
+            GameTypeResult GTRSS = DrawingResults.GTRSS;
+            GameTypeResult GTRPE = DrawingResults.GTRPE;
 
             Console.WriteLine("\n\n--------------------------------------------");
             Console.WriteLine($"QUINI 6 DRAWINGS:");
@@ -256,7 +221,7 @@ namespace Quini6CLI.Core
             PozoExtraResults.Write(Format.Alternative);
         }
 
-        private void PrintWinners(Quini6Winners Q6W, PrizeGenerator PG)
+        private static void PrintWinners(Quini6Winners Q6W, PrizeGenerator PG)
         {
             TradicionalPrimeraFirstPrizeWinners TPFPW = (TradicionalPrimeraFirstPrizeWinners)Q6W.TPFPW;
             TradicionalPrimeraSecondPrizeWinners TPSPW = (TradicionalPrimeraSecondPrizeWinners)Q6W.TPSPW;
@@ -429,5 +394,6 @@ namespace Quini6CLI.Core
                 Winners.Write(Format.Alternative);
             }
         }
+        #endregion
     }
 }

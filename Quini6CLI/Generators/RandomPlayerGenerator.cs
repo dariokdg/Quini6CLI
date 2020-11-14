@@ -15,7 +15,7 @@ namespace Quini6CLI.Generators
         private readonly Random R = new Random();
         private readonly PersonNameGenerator PNG = new PersonNameGenerator();
         private readonly PlaceNameGenerator CNG = new PlaceNameGenerator();
-        private readonly IResultGenerator RG = new ResultGenerator();
+        private readonly IDrawingResultGenerator RG = new DrawingResultGenerator();
 
         public RandomPlayerGenerator()
         {

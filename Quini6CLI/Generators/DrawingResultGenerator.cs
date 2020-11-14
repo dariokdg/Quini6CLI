@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Quini6CLI.Generators
 {
-    class ResultGenerator : IResultGenerator
+    class DrawingResultGenerator : IDrawingResultGenerator
     {
         private int FirstNumber { get; set; }
         private int SecondNumber { get; set; }
@@ -12,7 +12,7 @@ namespace Quini6CLI.Generators
         private int FifthNumber { get; set; }
         private int SixthNumber { get; set; }
 
-        public ResultGenerator()
+        public DrawingResultGenerator()
         {
 
         }
