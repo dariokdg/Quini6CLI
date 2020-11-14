@@ -8,6 +8,13 @@
     <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
     <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
     <NoWarn>NU1605</NoWarn>
+    <ApplicationIcon>Quini6Logo.ico</ApplicationIcon>
+    <Version>1.1</Version>
+    <Authors>Darío De Giacomo</Authors>
+    <Company />
+    <Product />
+    <PackageProjectUrl>https://github.com/dariokdg/Quini6CLI/</PackageProjectUrl>
+    <PackageIcon>Quini6Logo.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -22,6 +29,13 @@
 
   <ItemGroup>
     <Folder Include="Tests\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Resources\Quini6Logo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
