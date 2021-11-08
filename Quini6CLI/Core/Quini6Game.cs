@@ -7,6 +7,7 @@ using Quini6CLI.Winners;
 using Quini6CLI.Checkers;
 using Quini6CLI.Generators;
 using Quini6CLI.Interfaces;
+using System.Threading;
 
 namespace Quini6CLI.Core
 {
@@ -128,6 +129,7 @@ namespace Quini6CLI.Core
         #region --- Console print section ---
         private static void PrintProgramStartup()
         {
+            PrintGameStartMessage();
             Console.Clear();
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine($"QUINI 6 GAME STARTED: {DateTime.Now}");
@@ -394,6 +396,33 @@ namespace Quini6CLI.Core
                 }
                 Winners.Write(Format.Alternative);
             }
+        }
+
+        private static void PrintGameStartMessage()
+        {
+            Console.Write("STARTING QUINI 6 GAME IN 3.");
+            Thread.Sleep(250);
+            Thread.Sleep(250);
+            Console.Write(".");
+            Thread.Sleep(250);
+            Console.Write(".");
+            Thread.Sleep(250);
+            Console.Write(" ");
+            Thread.Sleep(250);
+            Console.Write("2.");
+            Thread.Sleep(250);
+            Console.Write(".");
+            Thread.Sleep(250);
+            Console.Write(".");
+            Thread.Sleep(250);
+            Console.Write(" ");
+            Console.Write("1.");
+            Thread.Sleep(250);
+            Console.Write(".");
+            Thread.Sleep(250);
+            Console.Write(".");
+            Thread.Sleep(250);
+            Console.Write(" ");
         }
         #endregion
     }

@@ -37,7 +37,7 @@ namespace Quini6CLI.Generators
                                 Name: PNG.GenerateRandomFirstAndLastName(),
                                 Age: R.Next(18, 101),
                                 City: CNG.GenerateRandomPlaceName(),
-                                Address: PNG.GenerateRandomFirstAndLastName() + " " + R.Next(100, 10000),
+                                Address: ShortenOrDeleteFirstName(PNG.GenerateRandomFirstName()) + PNG.GenerateRandomLastName() + " " + R.Next(100, 10000),
                                 PhoneNumber: (3410000000 + R.Next(1111111, 2000000)).ToString(),
                                 Quini6Ticket: 
                                     new Ticket(
@@ -51,7 +51,6 @@ namespace Quini6CLI.Generators
                     }
                 }
                 Console.WriteLine($"ALL {NumberOfRandomPlayers} PLAYERS CREATED");
-                PrintGameStartMessage();
                 return RandomPlayers;
             }
             else
@@ -60,31 +59,26 @@ namespace Quini6CLI.Generators
             }
         }
 
-        private static void PrintGameStartMessage()
+        private static string ShortenOrDeleteFirstName(string FirstName)
         {
-            Console.Write("STARTING QUINI 6 GAME IN 3.");
-            Thread.Sleep(250);
-            Thread.Sleep(250);
-            Console.Write(".");
-            Thread.Sleep(250);
-            Console.Write(".");
-            Thread.Sleep(250);
-            Console.Write(" ");
-            Thread.Sleep(250);
-            Console.Write("2.");
-            Thread.Sleep(250);
-            Console.Write(".");
-            Thread.Sleep(250);
-            Console.Write(".");
-            Thread.Sleep(250);
-            Console.Write(" ");
-            Console.Write("1.");
-            Thread.Sleep(250);
-            Console.Write(".");
-            Thread.Sleep(250);
-            Console.Write(".");
-            Thread.Sleep(250);
-            Console.Write(" ");
+            Random ThreeSidedCoin = new Random();
+            int RandomizedResult = ThreeSidedCoin.Next(1, 4);
+            if (RandomizedResult == 1)
+            {
+                return FirstName + " ";
+            }
+            else if (RandomizedResult == 2)
+            {
+                return FirstName[0] + ". ";
+            }
+            else if (RandomizedResult == 3)
+            {
+                return "";
+            }
+            else
+            {
+                return "";
+            }
         }
     }
 }
